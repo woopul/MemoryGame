@@ -3,42 +3,49 @@ import '../scss/main.scss'
 
 import reactLogo from '../images/react-logo.png'
 
-
 class LevelButton extends React.Component {
 
+    handleClick = level => {
+        console.log(level);
+    }
+
     render() {
-        return <div className="nav_button"><span>{this.props.level.toLocaleUpperCase()}</span></div>
+        const {level} = this.props;
+        return <div onClick={e => this.handleClick({level})} className="nav_button"><span>{level.toUpperCase()}</span>
+        </div>
     }
 }
 
 
 class Board extends React.Component {
-    constructor(props) {
-        super(props);
 
-        this.state = {
-            cards: [],
-        }
-    }
+    state = {
+        level: "easy",
+        filledCards: [],
+        cardsToShow: [],
+        indexToShow: [],
+        cardsInRow: 0,
+    };
+
 
     //choose image for a card depends on number in a row
     genCards = cardsNum => {
 
-        let cards = [];
+        let filledCards = [];
+        let blankCards = [];
 
-        for (let i = 0; i<cardsNum; i++) {
+        for (let i = 0; i < cardsNum; i++) {
             const card = i;
-            cards = [...cards, card, card];
-            // cards.push(card);
-            // cards.push(card);
+            filledCards = [...filledCards, card, card];
+            blankCards = [...blankCards, "?"];
         }
 
-        console.log(cards);
 
-        this.shuffle(cards);
+        this.shuffle(filledCards);
 
         this.setState({
-            cards:cards,
+            filledCards: filledCards,
+            cardsToShow: blankCards,
         })
     }
 
@@ -47,24 +54,68 @@ class Board extends React.Component {
             let j = Math.floor(Math.random() * i);
             [cardList[i - 1], cardList[j]] = [cardList[j], cardList[i - 1]];
         }
-    }
+    };
 
-    handleClick = card =>{
-        console.log(card);
-    }
+    handleClick = index => {
+        const {indexToShow, cardsToShow, filledCards} = this.state;
+
+        let tempCards = [...cardsToShow];
+        tempCards[index] = filledCards[index];
+
+        
+        this.setState({
+            cardsToShow: tempCards,
+
+        })
+        console.log(indexToShow);
+    };
+
 
     componentDidMount() {
-        this.genCards(18);
+        const {level} = this.state;
+        let cardsToGenerate;
+
+        switch (level) {
+            case "easy":
+                cardsToGenerate = 18;
+                this.setState({
+                    cardsInRow: 6,
+                });
+                break;
+
+            case "medium":
+                cardsToGenerate = 32;
+                this.setState({
+                    cardsInRow: 8,
+                });
+                break;
+
+            case "hard":
+                cardsToGenerate = 50;
+                this.setState({
+                    cardsInRow: 10,
+                });
+                break;
+        }
+        this.genCards(cardsToGenerate);
     }
 
     render() {
+        const {cardsInRow, cardsToShow} = this.state;
 
-        const cardList = this.state.cards.map((card, index) =>{
-            return <div onClick={e=> this.handleClick(card)} className="card" key={index}>{card}</div>
+        const cardStyle = {
+            width: `${100 / cardsInRow}%`,
+            height: `${100 / cardsInRow}%`,
+            background: "grey",
+        }
+
+        const cardList = this.state.cardsToShow.map((card, index) => {
+            return <div style={cardStyle} onClick={e => this.handleClick(index)} className="card"
+                        key={index}>{card}</div>
         });
 
         console.log(cardList);
-        return <div  className="board">
+        return <div className="board">
             {cardList}
         </div>
     }
@@ -86,8 +137,8 @@ class Game extends React.Component {
 
     render() {
         return <div className="game_field">
-            <NavPanel />
-            <Board />
+            <NavPanel/>
+            <Board/>
         </div>
     }
 }
@@ -98,7 +149,7 @@ class App extends React.Component {
     render() {
         // this.particle();
         return (
-            <Game />
+            <Game/>
         );
     }
 }
