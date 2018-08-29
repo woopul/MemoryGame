@@ -1,7 +1,7 @@
 import React from 'react'
 import '../scss/main.scss'
+// import Board from 'Board'
 
-import reactLogo from '../images/react-logo.png'
 
 class LevelButton extends React.Component {
 
@@ -16,110 +16,39 @@ class LevelButton extends React.Component {
     }
 }
 
-
-class Board extends React.Component {
-
-    state = {
-        level: "easy",
-        filledCards: [],
-        cardsToShow: [],
-        indexToShow: [],
-        cardsInRow: 0,
-    };
-
-
-    //choose image for a card depends on number in a row
-    genCards = cardsNum => {
-
-        let filledCards = [];
-        let blankCards = [];
-
-        for (let i = 0; i < cardsNum; i++) {
-            const card = i;
-            filledCards = [...filledCards, card, card];
-            blankCards = [...blankCards, "?"];
-        }
-
-
-        this.shuffle(filledCards);
-
-        this.setState({
-            filledCards: filledCards,
-            cardsToShow: blankCards,
-        })
+class Card extends React.Component {
+    state ={
+        frontFaceImgSrc: `../../pictures/${this.props.img}.svg`,
     }
 
-    shuffle = cardList => {
-        for (let i = cardList.length; i; i--) {
-            let j = Math.floor(Math.random() * i);
-            [cardList[i - 1], cardList[j]] = [cardList[j], cardList[i - 1]];
-        }
-    };
-
-    handleClick = index => {
-        const {indexToShow, cardsToShow, filledCards} = this.state;
-
-        let tempCards = [...cardsToShow];
-        tempCards[index] = filledCards[index];
-
-        
-        this.setState({
-            cardsToShow: tempCards,
-
-        })
-        console.log(indexToShow);
-    };
-
-
-    componentDidMount() {
-        const {level} = this.state;
-        let cardsToGenerate;
-
-        switch (level) {
-            case "easy":
-                cardsToGenerate = 18;
-                this.setState({
-                    cardsInRow: 6,
-                });
-                break;
-
-            case "medium":
-                cardsToGenerate = 32;
-                this.setState({
-                    cardsInRow: 8,
-                });
-                break;
-
-            case "hard":
-                cardsToGenerate = 50;
-                this.setState({
-                    cardsInRow: 10,
-                });
-                break;
-        }
-        this.genCards(cardsToGenerate);
-    }
-
-    render() {
-        const {cardsInRow, cardsToShow} = this.state;
-
-        const cardStyle = {
-            width: `${100 / cardsInRow}%`,
-            height: `${100 / cardsInRow}%`,
-            background: "grey",
-        }
-
-        const cardList = this.state.cardsToShow.map((card, index) => {
-            return <div style={cardStyle} onClick={e => this.handleClick(index)} className="card"
-                        key={index}>{card}</div>
-        });
-
-        console.log(cardList);
-        return <div className="board">
-            {cardList}
+    render(){
+        return <div className='card'>
+            <img className='front_face' src={this.state.frontFaceImgSrc} alt=""/>
+            <img className='back_face' src="../../pictures/react.svg" alt=""/>
         </div>
     }
 }
+
+class Board extends React.Component {
+
+    imgSrcs =[]
+
+    generateCards = numToGenerate => {
+        let cardsArr = [];
+        for(let i = 0; i<numToGenerate; i++){
+            cardsArr.push(<Card img ={i+1}/>);
+        }
+        console.log(cardsArr);
+        return cardsArr;
+    }
+
+    render() {
+        return <section className="board">
+            {this.generateCards(6)}
+        </section>
+    }
+}
+
 
 class NavPanel extends React.Component {
 
@@ -147,7 +76,58 @@ class Game extends React.Component {
 class App extends React.Component {
 
     render() {
-        // this.particle();
+        const particle = () => {
+            particlesJS("particles-js", {
+                "particles": {
+                    "number": {"value": 95, "density": {"enable": true, "value_area": 800}},
+                    "color": {"value": "#ffffff"},
+                    "shape": {
+                        "type": "circle",
+                        "stroke": {"width": 0, "color": "#000000"},
+                        "polygon": {"nb_sides": 5},
+                        "image": {"src": "img/github.svg", "width": 100, "height": 100}
+                    },
+                    "opacity": {
+                        "value": 0.5,
+                        "random": false,
+                        "anim": {"enable": false, "speed": 1, "opacity_min": 0.1, "sync": false}
+                    },
+                    "size": {
+                        "value": 3,
+                        "random": true,
+                        "anim": {"enable": false, "speed": 40, "size_min": 0.1, "sync": false}
+                    },
+                    "line_linked": {"enable": true, "distance": 150, "color": "#ffffff", "opacity": 0.4, "width": 1},
+                    "move": {
+                        "enable": true,
+                        "speed": 6,
+                        "direction": "none",
+                        "random": false,
+                        "straight": false,
+                        "out_mode": "out",
+                        "bounce": false,
+                        "attract": {"enable": false, "rotateX": 600, "rotateY": 1200}
+                    }
+                },
+                "interactivity": {
+                    "detect_on": "window",
+                    "events": {
+                        "onhover": {"enable": true, "mode": "repulse"},
+                        "onclick": {"enable": true, "mode": "push"},
+                        "resize": true
+                    },
+                    "modes": {
+                        "grab": {"distance": 400, "line_linked": {"opacity": 1}},
+                        "bubble": {"distance": 400, "size": 40, "duration": 2, "opacity": 8, "speed": 3},
+                        "repulse": {"distance": 200, "duration": 0.4},
+                        "push": {"particles_nb": 4},
+                        "remove": {"particles_nb": 2}
+                    }
+                },
+                "retina_detect": true
+            });
+        }
+        particle();
         return (
             <Game/>
         );

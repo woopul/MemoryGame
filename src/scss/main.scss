@@ -7,13 +7,20 @@ $background-card-color: rgba(164,160,164,0.52);
 }
 
 body {
+  height: 100vh;
   font-family: sans-serif;
+  display: flex;
+  justify-content: center;
+  //background-image: linear-gradient(to right bottom, #293045, #3b5462, #5d797a, #8a9c93, #bcc0b4);
+  background-image: linear-gradient(to bottom, #2d3039, #313c42, #3b4748, #49524d, #5a5c55);
+  background-size: inherit;
+  background-repeat: no-repeat;
 }
 
-img {
-  width: 200px;
-  height: auto;
-}
+//img {
+//  width: 200px;
+//  height: auto;
+//}
 .particles-js-canvas-el {
   position: fixed;
   display: block;
@@ -24,11 +31,10 @@ img {
   left: 0;
 }
 
-
 .game_field {
-  width: 80vw;
+  width: 60vw;
   height: 80vh;
-  margin: 30px auto;
+  margin: auto;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -38,15 +44,16 @@ img {
     height: 10%;
     font-size: 20px;
     display: flex;
-    justify-content: flex-start;
+    justify-content: space-around;
     margin: 20px auto;
     box-shadow: 1px 4px 20px 0px black;
 
     .nav_button{
-      width:33%;
+      width: calc(33.33% - 5px);
       height: 100%;
       margin-right: 2px;
       display: flex;
+      background-color: rgba(87,255,110,0.33);
       justify-content: center;
       align-items: center;
 
@@ -55,31 +62,48 @@ img {
   }
 
   .board {
-    width: 80%;
+    width: 60%;
     height: 80%;
     display: flex;
+    justify-content: space-around;
     flex-wrap: wrap;
-    background: grey;
+    //background: rgba(255,251,255,0.33);
+    border: 2px solid #3b4748;
     box-shadow: 1px 4px 20px 0px black;
 
 
     .card {
       background: $background-card-color;
-      font-size: 40px;
+      //font-size: 40px;
+      width: calc(25% - 10px);
+      height: calc(33.333% - 10px);
+      border-radius: 5px;
       display: flex;
       justify-content: center;
       align-items: center;
-      padding: 1px;
+      position: relative;
+      transition: 0.5s;
+
       //border: 1px solid white;
       &:hover{
-        transform: scale(1.1);
+        transform: scale(1.05);
         background: lighten($background-card-color, 20%);
       }
+      &:active{
+        transform: scale(0.90);
+      }
+
+      .front_face, .back_face {
+        position: absolute;
+        width: 100%;
+        height:100%;
+        padding:10px;
+
+      }
+
     }
   }
 }
-
-
 
 
 #app {
