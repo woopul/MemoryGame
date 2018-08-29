@@ -1,5 +1,6 @@
 import React from 'react'
 import '../scss/main.scss'
+
 // import Board from 'Board'
 
 
@@ -17,34 +18,136 @@ class LevelButton extends React.Component {
 }
 
 class Card extends React.Component {
-    state ={
+    state = {
         frontFaceImgSrc: `../../pictures/${this.props.img}.svg`,
+        isClicked: false,
+    };
+
+
+    //set state this card on click
+    handleClick = (e,id) => {
+
+        console.log(id);
+
+        // console.log(e);
+        this.setState({
+            isClicked: !this.state.isClicked,
+        });
+
+        if (typeof this.props.tempCardClicked === 'function') {
+            this.props.tempCardClicked(this.props.img);
+        }
     }
 
-    render(){
-        return <div className='card'>
-            <img className='front_face' src={this.state.frontFaceImgSrc} alt=""/>
-            <img className='back_face' src="../../pictures/react.svg" alt=""/>
+
+    //add className to card depends if it's clicked - class flip - turns the card
+    toggleCardOnClick = className => {
+        const {img, id} = this.props;
+        const {frontFaceImgSrc} = this.state;
+
+        return <div  onClick={e => this.handleClick(e, id)} className={className}>
+            <img className='front_face' src={frontFaceImgSrc} alt={img + " logo"}/>
+            <img className='back_face' src="../../pictures/react.svg" alt="react"/>
         </div>
+    }
+
+    render() {
+
+        if (this.state.isClicked) {
+            return this.toggleCardOnClick("card flip");
+        } else {
+            return this.toggleCardOnClick("card");
+        }
     }
 }
 
 class Board extends React.Component {
 
-    imgSrcs =[]
+    state = {
+        cards:[],
+        isClicked: false,
+        tempCardClicked: '',
+        guessedCards: [],
 
-    generateCards = numToGenerate => {
-        let cardsArr = [];
-        for(let i = 0; i<numToGenerate; i++){
-            cardsArr.push(<Card img ={i+1}/>);
-        }
-        console.log(cardsArr);
-        return cardsArr;
+    };
+
+    componentDidMount() {
+        this.setState({
+            cards: this.generateCards(6)
+        })
     }
+
+
+    imgSrcs = ["angular", "aurelia", "backbone", "ember", "js-badge", "vue", "react"];
+
+
+
+    handleCardClick = imgValue => {
+        const {guessedCards, tempCardClicked, isClicked} = this.state;
+
+        console.log(isClicked);
+
+        if (!isClicked) {
+            this.setState({
+                isClicked: !isClicked,
+                tempCardClicked: imgValue,
+            })
+
+        } else {
+            if( tempCardClicked === imgValue){
+                this.setState({
+                    guessedCards:[...guessedCards, imgValue],
+                });
+                console.log("TRAFIONE!!");
+            }
+
+            this.setState({
+                tempCardClicked: "",
+            });
+        }
+        console.log(imgValue);
+    };
+
+
+    //Generate and shuffle cards
+    generateCards = numToGenerate => {
+
+        let cardsArr = [];
+
+        for (let i = 0; i < numToGenerate; i++) {
+            const imgName = this.imgSrcs[i];
+
+            cardsArr.push(
+                <Card cardClicked={this.handleCardClick}
+                      key={i}
+                      id={i}
+                      guessed = {false}
+                      img={imgName}/>);
+
+            cardsArr.push(
+                <Card cardClicked={this.handleCardClick}
+                      key={i + "-" + i}
+                      id={i + "-" + i}
+                      guessed = {false}
+                      img={imgName}/>);
+        }
+
+        this.shuffle(cardsArr);
+
+        return cardsArr;
+    };
+
+    shuffle = cardList => {
+        for (let i = cardList.length; i; i--) {
+            let j = Math.floor(Math.random() * i);
+            [cardList[i - 1], cardList[j]] = [cardList[j], cardList[i - 1]];
+        }
+    };
+
 
     render() {
         return <section className="board">
-            {this.generateCards(6)}
+            {this.state.cards ? this.state.cards : null}
         </section>
     }
 }
@@ -88,7 +191,7 @@ class App extends React.Component {
                         "image": {"src": "img/github.svg", "width": 100, "height": 100}
                     },
                     "opacity": {
-                        "value": 0.5,
+                        "value": 0.2,
                         "random": false,
                         "anim": {"enable": false, "speed": 1, "opacity_min": 0.1, "sync": false}
                     },
