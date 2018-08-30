@@ -1,4 +1,4 @@
-$background-card-color: rgba(164,160,164,0.52);
+$background-card-color: rgba(164,160,164,0.99);
 
 *{
   margin: 0;
@@ -114,7 +114,7 @@ body {
     }
      .card.flip{
        transform: rotateY(180deg);
-       transition:transform 1s;
+       transition:transform 0.8s;
      }
   }
 }

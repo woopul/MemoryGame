@@ -1,39 +1,90 @@
 import React from "react";
+import Card from "./Card";
+
+
 
 class Board extends React.Component {
     state = {
-        level: "easy",
-        filledCards: [],
-        cardsToShow: [],
-        indexToShow: [],
-        tempIndex:[],
+        cards: [],                  // contain objects with generated card properties
+        isFlipped: false,           // stores information if card was clicked
+        firstClickedId: '',         // stores index of first clicked card
 
-        clickCount:0,
-        cardsInRow: 0,
+        guessedCards: [],           // stores list of card indexes which were match
+        temporaryFlippedCards:[],
     };
 
-    //fill first table with blank cards
-    //fill another table with choosen images (numbers)
-    genCards = cardsNum => {
-
-        let filledCards = [];
-        let blankCards = [];
-
-        for (let i = 0; i < cardsNum; i++) {
-            const card = i;
-            filledCards = [...filledCards, card, card];
-            blankCards = [...blankCards, "?"];
-        }
-
-        this.shuffle(filledCards);
-
+    //generate and asign cards
+    componentDidMount() {
         this.setState({
-            filledCards: filledCards,
-            cardsToShow: blankCards,
+            cards: this.generateCards(6)
         })
     }
 
-    //takes genereted table of cards and shuffle it
+    //list of card imagaes used later with generating images
+    imgSrcs = ["angular", "aurelia", "backbone", "ember", "js-badge", "vue", "react"];
+
+
+    //1st click - asign id of clicked card to temp var in state | change var isFlipped on true
+    //2st click - check if id of second card is the same as first one
+    //if true - save this id in the array of guessedId's - make further click on them not possible
+    //at the end reset tempCardValue and isFlipped parameter
+    handleCardClick = (currClickId, key) => {
+        const {guessedCards, firstClickedId, isFlipped, temporaryFlippedCards} = this.state;
+
+        //1st click
+        if (!isFlipped) {
+            this.setState({
+                isFlipped: true,
+                firstClickedId: currClickId,
+                temporaryFlippedCards: [...temporaryFlippedCards, key],
+            });
+
+        } else {    //2nd click
+            if (firstClickedId === currClickId) {
+                this.setState({
+                    guessedCards: [...guessedCards, currClickId],
+                });
+                console.log("TRAFIONE!!");
+                this.setState({
+                    temporaryFlippedCards: [...temporaryFlippedCards, key],
+                })
+            }
+
+            //reset values
+            this.setState({
+                firstClickedId: "",
+                isFlipped: false,
+                temporaryFlippedCards: [],
+            });
+        }
+
+        // console.log([...this.state]);
+    };
+
+    //Generate and shuffle cards
+    generateCards = numToGenerate => {
+        let cardsArr = [];
+
+        //loop through array of image name srcs
+        // generate card, make its copy
+        // place it in the cards array
+        for (let i = 0; i < numToGenerate; i++) {
+            const imgName = this.imgSrcs[i];
+
+            const card = {
+                id: i,
+                matched: false,
+                imgSrcName: imgName
+            };
+
+            cardsArr = [...cardsArr, card, card];
+        }
+
+        this.shuffle(cardsArr);
+
+        return cardsArr;
+    };
+
     shuffle = cardList => {
         for (let i = cardList.length; i; i--) {
             let j = Math.floor(Math.random() * i);
@@ -41,78 +92,41 @@ class Board extends React.Component {
         }
     };
 
-    //show clicked card
-    //if second is clicked, show both for 0.8s and then turn it back, if they are the same leave it visible
-    handleClick = index => {
-
-        const {indexToShow, cardsToShow, filledCards, clickCount, tempIndex} = this.state;
-
-        let tempCards = [...cardsToShow];
-        tempCards[index] = filledCards[index];
-
-        if(clickCount === 0){
-            this.setState({
-                tempIndex: index,
-                clickCount: clickCount +1,
-                // cardsToShow:
-            })
-        } else {
-
-        }
-
-
-        if(currClickState ===2){
-            this.setState({
-                clickCount: 0,
-            });
-        }
-
-        console.log(indexToShow);
-    };
-
-
-    componentDidMount() {
-        const {level} = this.state;
-        let cardsToGenerate;
-
-        switch (level) {
-            case "easy":
-                cardsToGenerate = 18;
-                this.setState({
-                    cardsInRow: 6,
-                });
-                break;
-
-            case "medium":
-                cardsToGenerate = 32;
-                this.setState({
-                    cardsInRow: 8,
-                });
-                break;
-
-            case "hard":
-                cardsToGenerate = 50;
-                this.setState({
-                    cardsInRow: 10,
-                });
-                break;
-        }
-        this.genCards(cardsToGenerate);
-    }
 
     render() {
-        const {cardsInRow, cardsToShow} = this.state;
 
-        const cardList = this.state.cardsToShow.map((card, index) => {
-            return <div style={cardStyle} onClick={e => this.handleClick(index)} className="card"
-                        key={index}>{card}</div>
+        const {guessedCards, cards, temporaryFlippedCards} = this.state;
+
+        //create all of cards based on genereted before cards parameters array
+        const cardList = cards.map((card, index) => {
+
+            let isGuessed = false;
+            let unflip = false;
+            const numOfTempFlipped = temporaryFlippedCards.length;
+
+            //if this card's id is on the list of matched card's id's- set props isGuessed on true
+            if (guessedCards.indexOf(card.id) >= 0) {
+                isGuessed = true;
+            }
+
+            if(numOfTempFlipped === 2 && temporaryFlippedCards.indexOf(card.id) >= 0) {
+                unflip = true;
+            }
+
+            return <Card cardClicked={this.handleCardClick}
+                         key={index}
+                         index ={index}
+                         id={card.id}
+                         matched={isGuessed}
+                         flipBack ={unflip}
+                         img={card.imgSrcName}/>
         });
 
-        console.log(cardList);
-        return <div className="board">
+        return <section className="board">
             {cardList}
-        </div>
+        </section>
     }
 }
+
 
 export default Board

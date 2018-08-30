@@ -1,7 +1,6 @@
 import React from 'react'
 import '../scss/main.scss'
-
-// import Board from 'Board'
+import Board from './Board'
 
 
 class LevelButton extends React.Component {
@@ -17,140 +16,6 @@ class LevelButton extends React.Component {
     }
 }
 
-class Card extends React.Component {
-    state = {
-        frontFaceImgSrc: `../../pictures/${this.props.img}.svg`,
-        isClicked: false,
-    };
-
-
-    //set state this card on click
-    handleClick = (e,id) => {
-
-        console.log(id);
-
-        // console.log(e);
-        this.setState({
-            isClicked: !this.state.isClicked,
-        });
-
-        if (typeof this.props.tempCardClicked === 'function') {
-            this.props.tempCardClicked(this.props.img);
-        }
-    }
-
-
-    //add className to card depends if it's clicked - class flip - turns the card
-    toggleCardOnClick = className => {
-        const {img, id} = this.props;
-        const {frontFaceImgSrc} = this.state;
-
-        return <div  onClick={e => this.handleClick(e, id)} className={className}>
-            <img className='front_face' src={frontFaceImgSrc} alt={img + " logo"}/>
-            <img className='back_face' src="../../pictures/react.svg" alt="react"/>
-        </div>
-    }
-
-    render() {
-
-        if (this.state.isClicked) {
-            return this.toggleCardOnClick("card flip");
-        } else {
-            return this.toggleCardOnClick("card");
-        }
-    }
-}
-
-class Board extends React.Component {
-
-    state = {
-        cards:[],
-        isClicked: false,
-        tempCardClicked: '',
-        guessedCards: [],
-
-    };
-
-    componentDidMount() {
-        this.setState({
-            cards: this.generateCards(6)
-        })
-    }
-
-
-    imgSrcs = ["angular", "aurelia", "backbone", "ember", "js-badge", "vue", "react"];
-
-
-
-    handleCardClick = imgValue => {
-        const {guessedCards, tempCardClicked, isClicked} = this.state;
-
-        console.log(isClicked);
-
-        if (!isClicked) {
-            this.setState({
-                isClicked: !isClicked,
-                tempCardClicked: imgValue,
-            })
-
-        } else {
-            if( tempCardClicked === imgValue){
-                this.setState({
-                    guessedCards:[...guessedCards, imgValue],
-                });
-                console.log("TRAFIONE!!");
-            }
-
-            this.setState({
-                tempCardClicked: "",
-            });
-        }
-        console.log(imgValue);
-    };
-
-
-    //Generate and shuffle cards
-    generateCards = numToGenerate => {
-
-        let cardsArr = [];
-
-        for (let i = 0; i < numToGenerate; i++) {
-            const imgName = this.imgSrcs[i];
-
-            cardsArr.push(
-                <Card cardClicked={this.handleCardClick}
-                      key={i}
-                      id={i}
-                      guessed = {false}
-                      img={imgName}/>);
-
-            cardsArr.push(
-                <Card cardClicked={this.handleCardClick}
-                      key={i + "-" + i}
-                      id={i + "-" + i}
-                      guessed = {false}
-                      img={imgName}/>);
-        }
-
-        this.shuffle(cardsArr);
-
-        return cardsArr;
-    };
-
-    shuffle = cardList => {
-        for (let i = cardList.length; i; i--) {
-            let j = Math.floor(Math.random() * i);
-            [cardList[i - 1], cardList[j]] = [cardList[j], cardList[i - 1]];
-        }
-    };
-
-
-    render() {
-        return <section className="board">
-            {this.state.cards ? this.state.cards : null}
-        </section>
-    }
-}
 
 
 class NavPanel extends React.Component {
@@ -216,7 +81,7 @@ class App extends React.Component {
                     "detect_on": "window",
                     "events": {
                         "onhover": {"enable": true, "mode": "repulse"},
-                        "onclick": {"enable": true, "mode": "push"},
+                        "onclick": {"enable": false, "mode": "push"},
                         "resize": true
                     },
                     "modes": {
