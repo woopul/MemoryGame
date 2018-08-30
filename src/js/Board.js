@@ -5,6 +5,7 @@ import Card from "./Card";
 
 class Board extends React.Component {
     state = {
+        moves:0,
         cards: [],                  // contain objects with generated card properties
         isFlipped: false,           // stores information if card was clicked
         firstClickedId: '',         // stores index of first clicked card
@@ -21,7 +22,7 @@ class Board extends React.Component {
     }
 
     //list of card imagaes used later with generating images
-    imgSrcs = ["angular", "aurelia", "backbone", "ember", "js-badge", "vue", "react"];
+    imgSrcs = ["angular", "aurelia", "backbone", "ember", "js-badge", "vue", "pinguin", "nodejs2","visual-basic"];
 
 
     //1st click - asign id of clicked card to temp var in state | change var isFlipped on true
@@ -29,7 +30,11 @@ class Board extends React.Component {
     //if true - save this id in the array of guessedId's - make further click on them not possible
     //at the end reset tempCardValue and isFlipped parameter
     handleCardClick = (currClickId, key) => {
-        const {guessedCards, firstClickedId, isFlipped, temporaryFlippedCards} = this.state;
+        const {guessedCards, firstClickedId, isFlipped, temporaryFlippedCards, moves} = this.state;
+
+        this.setState({
+            moves: moves+1,
+        })
 
         //1st click
         if (isFlipped === false) {
@@ -62,6 +67,7 @@ class Board extends React.Component {
             //reset values
            //
         }
+
     };
 
     resetTempValues = () =>{
@@ -74,13 +80,22 @@ class Board extends React.Component {
 
     //Generate and shuffle cards
     generateCards = numToGenerate => {
+        const maxValueToGenerate = this.imgSrcs.length;
         let cardsArr = [];
+        let randomGenerated = [];
 
         //loop through array of image name srcs
         // generate card, make its copy
         // place it in the cards array
         for (let i = 0; i < numToGenerate; i++) {
-            const imgName = this.imgSrcs[i];
+            let randomNum;
+            do{
+                randomNum = Math.floor(Math.random()*(maxValueToGenerate -1)+1)
+            } while (randomGenerated.indexOf(randomNum)>=0);
+
+            randomGenerated.push(randomNum);
+
+            const imgName = this.imgSrcs[randomNum];
 
             const card = {
                 id: i,
@@ -132,6 +147,11 @@ class Board extends React.Component {
                          className = {className}
                          img={card.imgSrcName}/>
         });
+        if(this.state.guessedCards.length === 6){
+            console.log('gameOver');
+            console.log(this.state.moves);
+
+        }
 
         return <section className="board">
             {cardList}

@@ -1,5 +1,6 @@
 import React from 'react'
 import '../scss/main.scss'
+// import
 import Board from './Board'
 
 
@@ -28,6 +29,8 @@ class NavPanel extends React.Component {
         </div>
     }
 }
+
+
 
 
 class Game extends React.Component {
