@@ -1,18 +1,16 @@
 import React from "react";
 
 class Card extends React.Component {
-    state = {
-        frontFaceImgSrc: `../../pictures/${this.props.img}.svg`,
-        isFlipped: false,
-    };
+
 
     handleClick = () => {
         //if clicked - set isFlipped on true , send this' card id up to the board component
         //If cards with this id are matched or card is flipped - function is no longer executed
-        if (this.props.matched === false || this.state.isFlipped === false) {
-            this.setState({
-                isFlipped: true,
-            });
+
+        const {className, matched} = this.props;
+        const flipped = className === 'card flip';
+
+        if (matched === false && flipped === false) {
 
             if (typeof this.props.cardClicked === 'function') {
                 this.props.cardClicked(this.props.id, this.props.index);
@@ -20,42 +18,18 @@ class Card extends React.Component {
         }
     };
 
-    //add className to card depends if it's clicked - class flip - turns the card
-    toggleCardOnClick = () => {
-        const {img, matched} = this.props;
-        const {frontFaceImgSrc, isFlipped} = this.state;
-        let className = '';
 
-        if(this.props.flipBack){
-            setTimeout(()=>{
-                this.setState({
-                    isFlipped:false,
-                });
-                className  = 'card'
-            }, 1000);
+    render() {
 
-        } else if( matched || isFlipped ){
-
-            className = 'card flip'
-        } else {
-            className = 'card'
-        }
+        const frontFaceImgSrc = `../../pictures/${this.props.img}.svg`;
 
         return (
-            <div onClick={this.handleClick} className={className}>
-                <img className='front_face' src={frontFaceImgSrc} alt={img + " logo"}/>
-                <img className='back_face' src="../../pictures/react.svg" alt="react"/>
+            <div onClick={this.handleClick} className={this.props.className}>
+                <img className='front_face' src={frontFaceImgSrc} alt={this.props.img + " logo"}/>
+                <div className='back_face_container'><img className='back_face' src="../../pictures/react7.svg" alt="react"/></div>
             </div>
         )
     };
-
-    componentDidMount () {
-
-    }
-
-    render() {
-        return this.toggleCardOnClick();
-    }
 }
 
 export default Card

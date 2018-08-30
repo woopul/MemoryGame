@@ -1,4 +1,4 @@
-$background-card-color: rgba(164,160,164,0.99);
+$background-card-color:rgba(135,156,133,0.99);
 
 *{
   margin: 0;
@@ -58,7 +58,6 @@ body {
       align-items: center;
 
     }
-
   }
 
   .board {
@@ -68,7 +67,6 @@ body {
     display: flex;
     justify-content: space-around;
     flex-wrap: wrap;
-    //background: rgba(255,251,255,0.33);
     border: 2px solid #3b4748;
     box-shadow: 1px 4px 20px 0px black;
     perspective: 1000px;
@@ -76,7 +74,6 @@ body {
 
     .card {
       background: $background-card-color;
-      //font-size: 40px;
       width: calc(25% - 10px);
       height: calc(33.333% - 10px);
       border-radius: 5px;
@@ -111,10 +108,33 @@ body {
         transform: rotateY(180deg);
       }
 
+      .back_face{
+        animation: pulse 0.8s 0s infinite linear alternate;
+        //          spin 6s 0s infinite linear;
+
+        //animation-name: spin, pulse;
+        //animation-duration: 6s, 0.8s;
+        //animation-direction: normal, alternate;
+        //animation-timing-function: linear;
+        //animation-iteration-count: infinite;
+      }
+      .back_face_container {
+        width:100%;
+        height: 100%;
+        animation: spin 8s 0s infinite linear;
+      }
+
+      @keyframes pulse {
+        from {} to {transform: scale(1.1)}
+      }
+
+      @keyframes spin {
+        from {} to {transform: rotate(360deg)}
+      }
     }
      .card.flip{
        transform: rotateY(180deg);
-       transition:transform 0.8s;
+       transition:transform 0.5s;
      }
   }
 }

@@ -32,7 +32,8 @@ class Board extends React.Component {
         const {guessedCards, firstClickedId, isFlipped, temporaryFlippedCards} = this.state;
 
         //1st click
-        if (!isFlipped) {
+        if (isFlipped === false) {
+
             this.setState({
                 isFlipped: true,
                 firstClickedId: currClickId,
@@ -45,21 +46,31 @@ class Board extends React.Component {
                     guessedCards: [...guessedCards, currClickId],
                 });
                 console.log("TRAFIONE!!");
-                this.setState({
-                    temporaryFlippedCards: [...temporaryFlippedCards, key],
-                })
             }
 
-            //reset values
-            this.setState({
-                firstClickedId: "",
-                isFlipped: false,
-                temporaryFlippedCards: [],
-            });
-        }
 
-        // console.log([...this.state]);
+            if(temporaryFlippedCards.length <2){
+                this.setState({
+                    temporaryFlippedCards: [...temporaryFlippedCards, key],
+                });
+            }
+
+            setTimeout(()=>{
+                this.resetTempValues();
+            }, 600)
+
+            //reset values
+           //
+        }
     };
+
+    resetTempValues = () =>{
+        this.setState({
+            firstClickedId: "",
+            isFlipped: false,
+            temporaryFlippedCards: [],
+        });
+    }
 
     //Generate and shuffle cards
     generateCards = numToGenerate => {
@@ -73,8 +84,7 @@ class Board extends React.Component {
 
             const card = {
                 id: i,
-                matched: false,
-                imgSrcName: imgName
+                imgSrcName: imgName,
             };
 
             cardsArr = [...cardsArr, card, card];
@@ -92,33 +102,34 @@ class Board extends React.Component {
         }
     };
 
+    flipCard = cardKey => {
+        const {temporaryFlippedCards} = this.state;
+
+        const className = temporaryFlippedCards.indexOf(cardKey) >=0 ? 'card flip': 'card';
+
+        return className;
+    }
+
+    isGuessed = cardId =>{
+        const isGuessed = this.state.guessedCards.indexOf(cardId) >=0;
+        return isGuessed;
+    };
 
     render() {
 
-        const {guessedCards, cards, temporaryFlippedCards} = this.state;
-
         //create all of cards based on genereted before cards parameters array
-        const cardList = cards.map((card, index) => {
+        const cardList = this.state.cards.map((card, index) => {
 
-            let isGuessed = false;
-            let unflip = false;
-            const numOfTempFlipped = temporaryFlippedCards.length;
+            const isGuessed = this.isGuessed(card.id);
 
-            //if this card's id is on the list of matched card's id's- set props isGuessed on true
-            if (guessedCards.indexOf(card.id) >= 0) {
-                isGuessed = true;
-            }
-
-            if(numOfTempFlipped === 2 && temporaryFlippedCards.indexOf(card.id) >= 0) {
-                unflip = true;
-            }
+            const className = isGuessed ? 'card flip': this.flipCard(index);
 
             return <Card cardClicked={this.handleCardClick}
                          key={index}
                          index ={index}
                          id={card.id}
                          matched={isGuessed}
-                         flipBack ={unflip}
+                         className = {className}
                          img={card.imgSrcName}/>
         });
 

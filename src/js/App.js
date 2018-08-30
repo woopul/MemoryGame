@@ -7,7 +7,7 @@ class LevelButton extends React.Component {
 
     handleClick = level => {
         console.log(level);
-    }
+    };
 
     render() {
         const {level} = this.props;
@@ -34,7 +34,7 @@ class Game extends React.Component {
 
     render() {
         return <div className="game_field">
-            <NavPanel/>
+            <NavPanel />
             <Board/>
         </div>
     }
