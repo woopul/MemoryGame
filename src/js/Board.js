@@ -2,27 +2,43 @@ import React from "react";
 import Card from "./Card";
 
 
-
+//Generate board of cards depends of a level from props
 class Board extends React.Component {
     state = {
-        moves:0,
-        cards: [],                  // contain objects with generated card properties
+        moves: 0,
         isFlipped: false,           // stores information if card was clicked
         firstClickedId: '',         // stores index of first clicked card
+        numOfCardPairsToGenerate,   // depends of level ( 6, 8, 15);
 
-        guessedCards: [],           // stores list of card indexes which were match
-        temporaryFlippedCards:[],
+        level: this.props.level,
+
+        cards: [],                  // contain objects with generated card properties
+        guessedCardsList: [],           // stores list of card indexes which were match
+        temporaryFlippedCards: [],  // stores list of temp flipped cards (max 2)
     };
 
-    //generate and asign cards
-    componentDidMount() {
-        this.setState({
-            cards: this.generateCards(6)
-        })
-    }
 
     //list of card imagaes used later with generating images
-    imgSrcs = ["angular", "aurelia", "backbone", "ember", "js-badge", "vue", "pinguin", "nodejs2","visual-basic"];
+    easyImgSrcs = ["css3", "angular", "aurelia", "backbone", "ember", "js-badge", "vue", "pinguin", "nodejs2", "visual-basic"];
+    mediumImgSrcs = [];
+    hardImgSrcs = [];
+
+
+    //generate and asign cards || generating table of source images for medium and hard level
+    componentDidMount() {
+        this.setState({
+            cards: this.generateCards(this.props.level)
+        });
+
+
+        for (let i = 1; i <= 50; i++) {
+            const mediumSrc = `../../pictures/medium(${i}).svg`;
+            this.mediumImgSrcs.push(mediumSrc);
+
+            const hardSrc = `../../pictures/hard(${i}).svg`
+            this.hardImgSrcs.push(hardSrc);
+        }
+    }
 
 
     //1st click - asign id of clicked card to temp var in state | change var isFlipped on true
@@ -30,11 +46,11 @@ class Board extends React.Component {
     //if true - save this id in the array of guessedId's - make further click on them not possible
     //at the end reset tempCardValue and isFlipped parameter
     handleCardClick = (currClickId, key) => {
-        const {guessedCards, firstClickedId, isFlipped, temporaryFlippedCards, moves} = this.state;
+        const {guessedCardsList, firstClickedId, isFlipped, temporaryFlippedCards, moves} = this.state;
 
         this.setState({
-            moves: moves+1,
-        })
+            moves: moves + 1,
+        });
 
         //1st click
         if (isFlipped === false) {
@@ -48,29 +64,25 @@ class Board extends React.Component {
         } else {    //2nd click
             if (firstClickedId === currClickId) {
                 this.setState({
-                    guessedCards: [...guessedCards, currClickId],
+                    guessedCardsList: [...guessedCardsList, currClickId],
                 });
                 console.log("TRAFIONE!!");
             }
 
-
-            if(temporaryFlippedCards.length <2){
+            if (temporaryFlippedCards.length < 2) {
                 this.setState({
                     temporaryFlippedCards: [...temporaryFlippedCards, key],
                 });
             }
 
-            setTimeout(()=>{
+            setTimeout(() => {
                 this.resetTempValues();
             }, 600)
 
-            //reset values
-           //
         }
-
     };
 
-    resetTempValues = () =>{
+    resetTempValues = () => {
         this.setState({
             firstClickedId: "",
             isFlipped: false,
@@ -79,27 +91,65 @@ class Board extends React.Component {
     }
 
     //Generate and shuffle cards
-    generateCards = numToGenerate => {
-        const maxValueToGenerate = this.imgSrcs.length;
+    generateCards = level => {
+        let numOfCardPairsToGenerate;
+        let maxValueToIterate;
+        let imgSourceList;
+
         let cardsArr = [];
         let randomGenerated = [];
 
-        //loop through array of image name srcs
-        // generate card, make its copy
-        // place it in the cards array
-        for (let i = 0; i < numToGenerate; i++) {
+        //depends of level sets parameters
+        switch (level) {
+            case 'easy':
+                numOfCardPairsToGenerate = 6;
+                maxValueToIterate = this.easyImgSrcs.length;
+                imgSourceList = this.easyImgSrcs;
+
+                this.setState({
+                    numOfCardPairsToGenerate: 6,
+                });
+                break;
+
+            case 'medium':
+                numOfCardPairsToGenerate = 10;
+                maxValueToIterate = this.mediumImgSrcs.length;
+                imgSourceList = this.mediumImgSrcs;
+
+                this.setState({
+                    numOfCardPairsToGenerate: 10,
+                });
+                break;
+
+            case 'hard':
+                numOfCardPairsToGenerate = 15;
+                maxValueToIterate = this.hardImgSrcs.length;
+                imgSourceList = this.hardImgSrcs;
+
+                this.setState({
+                    numOfCardPairsToGenerate: 15,
+                });
+                break;
+        }
+
+        console.log(numOfCardPairsToGenerate);
+        console.log(maxValueToIterate);
+        console.log(imgSourceList);
+
+
+        //----------------------GENERATING CARDS
+        for (let i = 0; i < numOfCardPairsToGenerate; i++) {
             let randomNum;
-            do{
-                randomNum = Math.floor(Math.random()*(maxValueToGenerate -1)+1)
-            } while (randomGenerated.indexOf(randomNum)>=0);
+
+            do {
+                randomNum = Math.floor(Math.random() * (maxValueToIterate - 1) + 1)
+            } while (randomGenerated.indexOf(randomNum) >= 0);
 
             randomGenerated.push(randomNum);
 
-            const imgName = this.imgSrcs[randomNum];
-
             const card = {
                 id: i,
-                imgSrcName: imgName,
+                imgSource: imgSourceList[randomNum],
             };
 
             cardsArr = [...cardsArr, card, card];
@@ -120,13 +170,13 @@ class Board extends React.Component {
     flipCard = cardKey => {
         const {temporaryFlippedCards} = this.state;
 
-        const className = temporaryFlippedCards.indexOf(cardKey) >=0 ? 'card flip': 'card';
+        const className = temporaryFlippedCards.indexOf(cardKey) >= 0 ? 'card flip' : 'card';
 
         return className;
     }
 
-    isGuessed = cardId =>{
-        const isGuessed = this.state.guessedCards.indexOf(cardId) >=0;
+    isGuessed = cardId => {
+        const isGuessed = this.state.guessedCardsList.indexOf(cardId) >= 0;
         return isGuessed;
     };
 
@@ -135,22 +185,28 @@ class Board extends React.Component {
         //create all of cards based on genereted before cards parameters array
         const cardList = this.state.cards.map((card, index) => {
 
+            //check if this card has flipped pair
             const isGuessed = this.isGuessed(card.id);
 
-            const className = isGuessed ? 'card flip': this.flipCard(index);
+            //set flip state depends of if it's guessed, flipped or not flipped
+            const className = isGuessed ? 'card flip' : this.flipCard(index);
 
             return <Card cardClicked={this.handleCardClick}
                          key={index}
-                         index ={index}
+                         index={index}
                          id={card.id}
+                         level={this.props.level}
                          matched={isGuessed}
-                         className = {className}
-                         img={card.imgSrcName}/>
+                         className={className}
+                         imgSrc={card.imgSource}/>
         });
-        if(this.state.guessedCards.length === 6){
+
+
+        const {guessedCardsList, numOfCardPairsToGenerate} = this.state;
+        //if number of guessed pairs is equal to number of pairs to generate GAME OVER
+        if (guessedCardsList.length === numOfCardPairsToGenerate) {
             console.log('gameOver');
             console.log(this.state.moves);
-
         }
 
         return <section className="board">

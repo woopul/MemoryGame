@@ -1,44 +1,36 @@
 import React from 'react'
 import '../scss/main.scss'
-// import
 import Board from './Board'
+import NavPanel from "./NavPanel"
 
+class Game extends React.Component {
+    state = {
+        buttonClicked: false,
+        level:'',
+    };
 
-class LevelButton extends React.Component {
-
-    handleClick = level => {
-        console.log(level);
+    handleNavClick = chosenLevel => {
+        this.setState({
+            buttonClicked: true,
+            level: chosenLevel,
+        });
+        console.log(chosenLevel);
     };
 
     render() {
-        const {level} = this.props;
-        return <div onClick={e => this.handleClick({level})} className="nav_button"><span>{level.toUpperCase()}</span>
-        </div>
-    }
-}
+        const {buttonClicked, level} = this.state;
+        let renderElement;
 
+        if (!buttonClicked) {
+            renderElement = <NavPanel buttonClicked={this.handleNavClick}/>
+        } else {
+            renderElement = <Board level={level}/>
+        }
 
+        console.log(buttonClicked);
 
-class NavPanel extends React.Component {
-
-    render() {
-        return <div className="nav_panel">
-            <LevelButton level="easy"/>
-            <LevelButton level="medium"/>
-            <LevelButton level="hard"/>
-        </div>
-    }
-}
-
-
-
-
-class Game extends React.Component {
-
-    render() {
         return <div className="game_field">
-            <NavPanel />
-            <Board/>
+            {renderElement}
         </div>
     }
 }
