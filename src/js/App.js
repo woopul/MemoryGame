@@ -3,6 +3,9 @@ import '../scss/main.scss'
 import Board from './Board'
 import NavPanel from "./NavPanel"
 
+
+
+//Render board game with choosen level
 class Game extends React.Component {
     state = {
         buttonClicked: false,
@@ -42,7 +45,7 @@ class App extends React.Component {
         const particle = () => {
             particlesJS("particles-js", {
                 "particles": {
-                    "number": {"value": 95, "density": {"enable": true, "value_area": 800}},
+                    "number": {"value": 160, "density": {"enable": true, "value_area": 800}},
                     "color": {"value": "#ffffff"},
                     "shape": {
                         "type": "circle",

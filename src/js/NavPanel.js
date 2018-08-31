@@ -10,25 +10,19 @@ class LevelButton extends React.Component {
 
     render() {
         const {level} = this.props;
-        return <div onClick={e => this.handleClick({level})} className="nav_button"><span>{level.toUpperCase()}</span>
+        return <div onClick={this.handleClick} className="nav_button"><span>{level.toUpperCase()}</span>
         </div>
     }
 }
 
-
 class NavPanel extends React.Component {
-
-    handleButtonClick = levelClicked => {
-        if (typeof this.props.buttonClicked === 'function') {
-            this.props.buttonClicked(levelClicked);
-        }
-    };
 
     render() {
         return <div className="nav_panel">
-            <LevelButton LevelButtonClicked={this.handleButtonClick} level="easy"/>
-            <LevelButton LevelButtonClicked={this.handleButtonClick} level="medium"/>
-            <LevelButton LevelButtonClicked={this.handleButtonClick} level="hard"/>
+                <LevelButton LevelButtonClicked={this.props.buttonClicked} level="easy"/>
+                <LevelButton LevelButtonClicked={this.props.buttonClicked} level="medium"/>
+                <LevelButton LevelButtonClicked={this.props.buttonClicked} level="hard"/>
+
         </div>
     }
 }

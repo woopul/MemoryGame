@@ -1,20 +1,20 @@
-$background-card-color:rgba(135,156,133,0.9);
+$background-card-color: rgba(135, 156, 133, 0.9);
 
-*{
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
 body {
-  height: 100vh;
-  font-family: sans-serif;
-  display: flex;
-  justify-content: center;
-  //background-image: linear-gradient(to right bottom, #293045, #3b5462, #5d797a, #8a9c93, #bcc0b4);
-  background-image: linear-gradient(to bottom, #2d3039, #313c42, #3b4748, #49524d, #5a5c55);
-  background-size: inherit;
-  background-repeat: no-repeat;
+    height: 100vh;
+    font-family: sans-serif;
+    display: flex;
+    justify-content: center;
+    //background-image: linear-gradient(to right bottom, #293045, #3b5462, #5d797a, #8a9c93, #bcc0b4);
+    background-image: linear-gradient(to bottom, #2d3039, #313c42, #3b4748, #49524d, #5a5c55);
+    background-size: inherit;
+    background-repeat: no-repeat;
 }
 
 //img {
@@ -22,129 +22,152 @@ body {
 //  height: auto;
 //}
 .particles-js-canvas-el {
-  position: fixed;
-  display: block;
-  z-index: -1;
-  width: 100%;
-  height: 100%;
-  top: 0;
-  left: 0;
+    position: fixed;
+    display: block;
+    z-index: -1;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
 }
 
 .game_field {
-  width: 60vw;
-  height: 100vh;
-  margin: 0 auto;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-
-  .nav_panel {
-    width: 40%;
-    height: 5%;
-    font-size: 20px;
+    width: 60vw;
+    height: 100vh;
+    margin: 0 auto;
     display: flex;
-    justify-content: space-around;
-    margin: 20px auto;
-    box-shadow: 1px 4px 20px 0px black;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 
-    .nav_button{
-      width: calc(33.33% - 5px);
-      height: 100%;
-      margin-right: 2px;
-      display: flex;
-      background-color: rgba(159,180,157,0.47);
-      justify-content: center;
-      align-items: center;
+    .nav_panel {
+        //width: ;
+        //height: 5%;
+        width: auto;
+        height:auto;
+        font-size: 20px;
+        display: flex;
+        justify-content: space-around;
+        margin: 20px auto;
+        //box-shadow: 1px 4px 20px 0px black;
+
+                .nav_button {
+                    //width: calc(33.33% - 5px);
+                    //display: inline-block;
+                    width: 150px;
+                    //height: 100%;
+                    height: 50px;
+                    margin-right: 8px;
+                    display: flex;
+                    border-radius: 50px;
+                    background-color: rgba(159, 180, 157, 0.47);
+                    justify-content: center;
+                    align-items: center;
+                    box-shadow: 3px 4px 13px 4px #343539;
+
+                    &:hover {
+                        cursor: pointer;
+                        filter: brightness(110%);
+                        transform: scale(1.02);
+                    }
+
+                    &:active{
+                        transform: scale(0.98);
+                    }
+                }
 
     }
-  }
 
-  .board {
-    width: 450px;
-    height: 550px;
-    padding: 5px;
-    display: flex;
-    justify-content: space-around;
-    flex-wrap: wrap;
-    border: 2px solid #3b4748;
-    //box-shadow: 1px 4px 20px 0px black;
-    perspective: 1000px;
+    .board {
+        width: 450px;
+        height: 550px;
+        padding: 5px;
+        display: flex;
+        justify-content: space-around;
+        flex-wrap: wrap;
+        //border: 2px solid #3b4748;
+        //box-shadow: 1px 4px 20px 0px black;
+        perspective: 1000px;
 
+        .card {
+            background: $background-card-color;
+            width: calc(25% - 10px);
+            height: calc(33.333% - 10px);
+            border-radius: 5px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
 
-    .card {
-      background: $background-card-color;
-      width: calc(25% - 10px);
-      height: calc(33.333% - 10px);
-      border-radius: 5px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      position: relative;
+            box-shadow: 1px 4px 20px 0px black;
 
-      box-shadow: 1px 4px 20px 0px black;
+            transform-style: preserve-3d;
+            transition: transform 0.5s;
 
-      transform-style: preserve-3d;
-      transition: transform 0.5s;
+            //border: 1px solid white;
+            &:hover {
+                transform: scale(1.05);
+                background: lighten($background-card-color, 20%);
+            }
+            &:active {
+                transform: scale(0.95);
+                transition: transform .2s;
+            }
 
+            .front_face, .back_face {
+                position: absolute;
+                width: 100%;
+                height: 100%;
+                padding: 10px;
+                backface-visibility: hidden;
 
-      //border: 1px solid white;
-      &:hover{
-        transform: scale(1.05);
-        background: lighten($background-card-color, 20%);
-      }
-      &:active{
-        transform: scale(0.95);
-        transition: transform .2s;
-      }
+            }
 
-      .front_face, .back_face {
-        position: absolute;
-        width: 100%;
-        height:100%;
-        padding:10px;
-        backface-visibility: hidden;
+            .front_face {
+                transform: rotateY(180deg);
+            }
 
-      }
+            .back_face {
+                animation: pulse 0.8s 0s infinite linear alternate;
+                //          spin 6s 0s infinite linear;
 
-      .front_face{
-        transform: rotateY(180deg);
-      }
+                //animation-name: spin, pulse;
+                //animation-duration: 6s, 0.8s;
+                //animation-direction: normal, alternate;
+                //animation-timing-function: linear;
+                //animation-iteration-count: infinite;
+            }
+            .back_face_container {
+                width: 100%;
+                height: 100%;
+                animation: spin 8s 0s infinite linear;
+            }
 
-      .back_face{
-        animation: pulse 0.8s 0s infinite linear alternate;
-        //          spin 6s 0s infinite linear;
+            @keyframes pulse {
+                from {
+                }
+                to {
+                    transform: scale(1.1)
+                }
+            }
 
-        //animation-name: spin, pulse;
-        //animation-duration: 6s, 0.8s;
-        //animation-direction: normal, alternate;
-        //animation-timing-function: linear;
-        //animation-iteration-count: infinite;
-      }
-      .back_face_container {
-        width:100%;
-        height: 100%;
-        animation: spin 8s 0s infinite linear;
-      }
-
-      @keyframes pulse {
-        from {} to {transform: scale(1.1)}
-      }
-
-      @keyframes spin {
-        from {} to {transform: rotate(360deg)}
-      }
+            @keyframes spin {
+                from {
+                }
+                to {
+                    transform: rotate(360deg)
+                }
+            }
+        }
+        .card.flip {
+            transform: rotateY(180deg);
+            transition: transform 0.3s;
+        }
     }
-     .card.flip{
-       transform: rotateY(180deg);
-       transition:transform 0.5s;
-     }
-  }
 }
 
-
 #app {
-  display: flex;
-  justify-content: center;
+    display: flex;
+    justify-content: center;
 }
 

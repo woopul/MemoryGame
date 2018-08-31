@@ -8,7 +8,7 @@ class Board extends React.Component {
         moves: 0,
         isFlipped: false,           // stores information if card was clicked
         firstClickedId: '',         // stores index of first clicked card
-        numOfCardPairsToGenerate,   // depends of level ( 6, 8, 15);
+        numOfCardPairsToGenerate:0,   // depends of level ( 6, 8, 15);
 
         level: this.props.level,
 
@@ -19,25 +19,37 @@ class Board extends React.Component {
 
 
     //list of card imagaes used later with generating images
-    easyImgSrcs = ["css3", "angular", "aurelia", "backbone", "ember", "js-badge", "vue", "pinguin", "nodejs2", "visual-basic"];
+    easyImgSrcsTest = ["css3.svg", "angular.svg", "aurelia.svg", "backbone.svg", "ember.svg",
+        "js-badge.svg", "vue.svg", "pinguin.svg", "nodejs2.svg", "visual-basic.svg"];
+
+    // easyImgSrcs = ["css3.svg", "angular.svg", "aurelia.svg", "backbone.svg", "ember.svg",
+    //     "js-badge.svg", "vue.svg", "pinguin.svg", "nodejs2.svg", "visual-basic.svg"];
+    easyImgSrcs = []
     mediumImgSrcs = [];
     hardImgSrcs = [];
 
 
     //generate and asign cards || generating table of source images for medium and hard level
     componentDidMount() {
-        this.setState({
-            cards: this.generateCards(this.props.level)
-        });
 
 
+        //put img sources of card itno the table
         for (let i = 1; i <= 50; i++) {
             const mediumSrc = `../../pictures/medium(${i}).svg`;
             this.mediumImgSrcs.push(mediumSrc);
 
-            const hardSrc = `../../pictures/hard(${i}).svg`
+            const hardSrc = `../../pictures/hard(${i}).svg`;
             this.hardImgSrcs.push(hardSrc);
+
         }
+
+        this.easyImgSrcs = this.easyImgSrcsTest.map(src =>{
+            return `../../pictures/${src}`
+        })
+
+        this.setState({
+            cards: this.generateCards(this.props.level)
+        });
     }
 
 
@@ -99,6 +111,7 @@ class Board extends React.Component {
         let cardsArr = [];
         let randomGenerated = [];
 
+        level='easy';
         //depends of level sets parameters
         switch (level) {
             case 'easy':
@@ -112,22 +125,22 @@ class Board extends React.Component {
                 break;
 
             case 'medium':
-                numOfCardPairsToGenerate = 10;
+                numOfCardPairsToGenerate = 6;
                 maxValueToIterate = this.mediumImgSrcs.length;
                 imgSourceList = this.mediumImgSrcs;
 
                 this.setState({
-                    numOfCardPairsToGenerate: 10,
+                    numOfCardPairsToGenerate: 6,
                 });
                 break;
 
             case 'hard':
-                numOfCardPairsToGenerate = 15;
+                numOfCardPairsToGenerate = 6;
                 maxValueToIterate = this.hardImgSrcs.length;
                 imgSourceList = this.hardImgSrcs;
 
                 this.setState({
-                    numOfCardPairsToGenerate: 15,
+                    numOfCardPairsToGenerate: 6,
                 });
                 break;
         }
@@ -137,13 +150,16 @@ class Board extends React.Component {
         console.log(imgSourceList);
 
 
-        //----------------------GENERATING CARDS
+        //----------------------GENERATING CARDS ------------------------------
         for (let i = 0; i < numOfCardPairsToGenerate; i++) {
             let randomNum;
 
             do {
                 randomNum = Math.floor(Math.random() * (maxValueToIterate - 1) + 1)
-            } while (randomGenerated.indexOf(randomNum) >= 0);
+            } while (randomGenerated.indexOf(randomNum) >=0 );
+
+            console.log(randomNum)
+            console.log(maxValueToIterate)
 
             randomGenerated.push(randomNum);
 
@@ -167,6 +183,7 @@ class Board extends React.Component {
         }
     };
 
+    //flip clicked card if its id is on the list on temporary flipped
     flipCard = cardKey => {
         const {temporaryFlippedCards} = this.state;
 
@@ -175,6 +192,7 @@ class Board extends React.Component {
         return className;
     }
 
+    //check if current genereted card id is on the list of guessed
     isGuessed = cardId => {
         const isGuessed = this.state.guessedCardsList.indexOf(cardId) >= 0;
         return isGuessed;
