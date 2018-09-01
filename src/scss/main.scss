@@ -40,6 +40,22 @@ body {
     justify-content: center;
     align-items: center;
 
+    .game_title{
+        color: white;
+        font-family: 'Comfortaa', cursive;
+        font-size: 45px;
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    .choose_level{
+        color: white;
+        font-family: 'Comfortaa', cursive;
+        font-size: 25px;
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
     .nav_panel {
         //width: ;
         //height: 5%;
@@ -129,14 +145,8 @@ body {
 
             .back_face {
                 animation: pulse 0.8s 0s infinite linear alternate;
-                //          spin 6s 0s infinite linear;
-
-                //animation-name: spin, pulse;
-                //animation-duration: 6s, 0.8s;
-                //animation-direction: normal, alternate;
-                //animation-timing-function: linear;
-                //animation-iteration-count: infinite;
             }
+
             .back_face_container {
                 width: 100%;
                 height: 100%;
@@ -164,6 +174,24 @@ body {
             transition: transform 0.3s;
         }
     }
+}
+//font-family: 'Comfortaa', cursive;
+//font-family: 'Sacramento', cursive;
+//font-family: 'Tangerine', cursive;
+//font-family: 'Architects Daughter', cursive;
+//font-family: 'Marck Script', cursive;
+//font-family: 'Bad Script', cursive;
+//font-family: 'Parisienne', cursive;
+//font-family: 'Shadows Into Light Two', cursive;
+
+.signature {
+    font-family: 'Tangerine', cursive;
+    font-size: 25px;
+    transform: rotate(-30deg);
+    color: white;
+    position: absolute;
+    bottom: 50px;
+    right: 100px
 }
 
 #app {

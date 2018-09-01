@@ -1,42 +1,6 @@
 import React from 'react'
 import '../scss/main.scss'
-import Board from './Board'
-import NavPanel from "./NavPanel"
-
-
-
-//Render board game with choosen level
-class Game extends React.Component {
-    state = {
-        buttonClicked: false,
-        level:'',
-    };
-
-    handleNavClick = chosenLevel => {
-        this.setState({
-            buttonClicked: true,
-            level: chosenLevel,
-        });
-        console.log(chosenLevel);
-    };
-
-    render() {
-        const {buttonClicked, level} = this.state;
-        let renderElement;
-
-        if (!buttonClicked) {
-            renderElement = <NavPanel buttonClicked={this.handleNavClick}/>
-        } else {
-            renderElement = <Board level={level}/>
-        }
-
-        console.log(buttonClicked);
-
-        return <div className="game_field">
-            {renderElement}
-        </div>
-    }
-}
+import Game from './Game'
 
 
 class App extends React.Component {

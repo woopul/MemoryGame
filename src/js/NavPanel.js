@@ -19,9 +19,9 @@ class NavPanel extends React.Component {
 
     render() {
         return <div className="nav_panel">
-                <LevelButton LevelButtonClicked={this.props.buttonClicked} level="easy"/>
-                <LevelButton LevelButtonClicked={this.props.buttonClicked} level="medium"/>
-                <LevelButton LevelButtonClicked={this.props.buttonClicked} level="hard"/>
+                <LevelButton LevelButtonClicked={this.props.levelChoosed} level="easy"/>
+                <LevelButton LevelButtonClicked={this.props.levelChoosed} level="medium"/>
+                <LevelButton LevelButtonClicked={this.props.levelChoosed} level="hard"/>
 
         </div>
     }

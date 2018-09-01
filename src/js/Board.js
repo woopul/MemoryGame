@@ -17,14 +17,13 @@ class Board extends React.Component {
         temporaryFlippedCards: [],  // stores list of temp flipped cards (max 2)
     };
 
-
     //list of card imagaes used later with generating images
     easyImgSrcsTest = ["css3.svg", "angular.svg", "aurelia.svg", "backbone.svg", "ember.svg",
         "js-badge.svg", "vue.svg", "pinguin.svg", "nodejs2.svg", "visual-basic.svg"];
 
     // easyImgSrcs = ["css3.svg", "angular.svg", "aurelia.svg", "backbone.svg", "ember.svg",
     //     "js-badge.svg", "vue.svg", "pinguin.svg", "nodejs2.svg", "visual-basic.svg"];
-    easyImgSrcs = []
+    easyImgSrcs = [];
     mediumImgSrcs = [];
     hardImgSrcs = [];
 
@@ -35,17 +34,17 @@ class Board extends React.Component {
 
         //put img sources of card itno the table
         for (let i = 1; i <= 50; i++) {
-            const mediumSrc = `../../pictures/medium(${i}).svg`;
+            const mediumSrc = `../../pictures/medium/(${i}).svg`;
             this.mediumImgSrcs.push(mediumSrc);
 
-            const hardSrc = `../../pictures/hard(${i}).svg`;
+            const hardSrc = `../../pictures/hard/(${i}).svg`;
             this.hardImgSrcs.push(hardSrc);
 
         }
 
         this.easyImgSrcs = this.easyImgSrcsTest.map(src =>{
             return `../../pictures/${src}`
-        })
+        });
 
         this.setState({
             cards: this.generateCards(this.props.level)
@@ -100,7 +99,7 @@ class Board extends React.Component {
             isFlipped: false,
             temporaryFlippedCards: [],
         });
-    }
+    };
 
     //Generate and shuffle cards
     generateCards = level => {
@@ -111,7 +110,7 @@ class Board extends React.Component {
         let cardsArr = [];
         let randomGenerated = [];
 
-        level='easy';
+        // level='easy';
         //depends of level sets parameters
         switch (level) {
             case 'easy':
@@ -147,13 +146,14 @@ class Board extends React.Component {
 
         console.log(numOfCardPairsToGenerate);
         console.log(maxValueToIterate);
-        console.log(imgSourceList);
+        // console.log(imgSourceList);
 
 
         //----------------------GENERATING CARDS ------------------------------
         for (let i = 0; i < numOfCardPairsToGenerate; i++) {
             let randomNum;
 
+            // select ( 6 || 10 || 15) different random nums, where max value is max pic arr value
             do {
                 randomNum = Math.floor(Math.random() * (maxValueToIterate - 1) + 1)
             } while (randomGenerated.indexOf(randomNum) >=0 );
@@ -171,6 +171,7 @@ class Board extends React.Component {
             cardsArr = [...cardsArr, card, card];
         }
 
+        console.log(cardsArr);
         this.shuffle(cardsArr);
 
         return cardsArr;
