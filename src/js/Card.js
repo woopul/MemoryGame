@@ -20,11 +20,10 @@ class Card extends React.Component {
 
 
     render() {
+
         const {level, imgSrc, className} = this.props;
 
-
-
-
+        console.log(className);
         return (
             <div onClick={this.handleClick} className={className}>
                 <img className='front_face' src={imgSrc} alt={imgSrc + " logo"}/>

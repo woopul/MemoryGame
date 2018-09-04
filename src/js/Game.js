@@ -27,7 +27,7 @@ class Game extends React.Component {
             renderElement = <div>
                 <h1 className='game_title'>The memory game</h1>
                 <p className='choose_level'>choose level</p>
-                <NavPanel levelChoosed={this.handleNavClick}/>
+                <NavPanel isLevelChoosed={this.handleNavClick}/>
             </div>
         } else {
             renderElement = <Board level={level}/>

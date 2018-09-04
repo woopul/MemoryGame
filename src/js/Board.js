@@ -75,7 +75,6 @@ class Board extends React.Component {
             });
 
         } else {    //2nd click
-
             //check if  flipped cards are the same
             if (firstClickedId === currClickId) {
                 this.setState({
@@ -137,8 +136,8 @@ class Board extends React.Component {
 
                 this.setState({
                     numOfCardPairsToGenerate: 10,
-                    flippedClassName:'card card-medium flip',   // depends of level - responsible for sizing
-                    unflippedClassName:'card card-medium',
+                    flippedClassName:'card-medium flip',   // depends of level - responsible for sizing
+                    unflippedClassName:'card-medium',
                     boardClassName:'board-medium',
                 });
                 break;
@@ -150,22 +149,21 @@ class Board extends React.Component {
 
                 this.setState({
                     numOfCardPairsToGenerate: 15,
-                    flippedClassName:'card card-hard flip',   // depends of level - responsible for sizing
-                    unflippedClassName:'card card-hard',
+                    flippedClassName:'card-hard flip',   // depends of level - responsible for sizing
+                    unflippedClassName:'card-hard',
                     boardClassName:'board-hard',
                 });
                 break;
         }
 
-        console.log(numOfCardPairsToGenerate);
-        console.log(maxValueToIterate);
-
+        console.log("state:");
+        console.log(this.state);
 
         //----------------------GENERATING CARDS ------------------------------
         for (let i = 0; i < numOfCardPairsToGenerate; i++) {
             let randomNum;
 
-            // select ( 6 || 10 || 15) different random nums, where max value is max pic arr value
+            // select (6 || 10 || 15) different random nums, where max value is max pic arr value
             do {
                 randomNum = Math.floor(Math.random() * (maxValueToIterate - 1) + 1)
             } while (randomGenerated.indexOf(randomNum) >=0 );
@@ -198,7 +196,7 @@ class Board extends React.Component {
     flipCard = cardKey => {
         const {temporaryFlippedCards,unflippedClassName,flippedClassName} = this.state;
 
-        const className = temporaryFlippedCards.indexOf(cardKey) >= 0 ? {flippedClassName} : {unflippedClassName};
+        const className = temporaryFlippedCards.indexOf(cardKey) >= 0 ? flippedClassName : unflippedClassName;
 
         return className;
     }
@@ -217,7 +215,7 @@ class Board extends React.Component {
             //check if this card has flipped pair
             const isGuessed = this.isGuessed(card.id);
             //set flip state depends of if it's guessed, flipped or not flipped
-            const className = isGuessed ? {flippedClassName} : this.flipCard(index);
+            const className = isGuessed ? flippedClassName : this.flipCard(index);
 
             return <Card cardClicked={this.handleCardClick}
                          key={index}
@@ -228,8 +226,6 @@ class Board extends React.Component {
                          className={className}
                          imgSrc={card.imgSource}/>
         });
-
-
 
 
         return <section className={boardClassName}>
