@@ -8,7 +8,11 @@ class Board extends React.Component {
         moves: 0,
         isFlipped: false,           // stores information if card was clicked
         firstClickedId: '',         // stores index of first clicked card
-        numOfCardPairsToGenerate:0,   // depends of level ( 6, 8, 15);
+        numOfCardPairsToGenerate:0, // depends of level ( 6, 8, 15);
+
+        flippedClassName:'',        // depends of level - responsible for sizing
+        unflippedClassName:'',
+        boardClassName:'',
 
         level: this.props.level,
 
@@ -57,22 +61,22 @@ class Board extends React.Component {
     //if true - save this id in the array of guessedId's - make further click on them not possible
     //at the end reset tempCardValue and isFlipped parameter
     handleCardClick = (currClickId, key) => {
-        const {guessedCardsList, firstClickedId, isFlipped, temporaryFlippedCards, moves} = this.state;
+        const {guessedCardsList, firstClickedId, isFlipped, temporaryFlippedCards} = this.state;
 
-        this.setState({
-            moves: moves + 1,
-        });
+        console.log(`ruchy: ${this.state.moves+1}`);
 
         //1st click
         if (isFlipped === false) {
-
+            //set state on that it is flipped, store flipped card id, stored flipped card key in the memomry
             this.setState({
                 isFlipped: true,
                 firstClickedId: currClickId,
-                temporaryFlippedCards: [...temporaryFlippedCards, key],
+                temporaryFlippedCards: [key],
             });
 
         } else {    //2nd click
+
+            //check if  flipped cards are the same
             if (firstClickedId === currClickId) {
                 this.setState({
                     guessedCardsList: [...guessedCardsList, currClickId],
@@ -88,13 +92,13 @@ class Board extends React.Component {
 
             setTimeout(() => {
                 this.resetTempValues();
-            }, 600)
-
+            }, 500)
         }
     };
 
     resetTempValues = () => {
         this.setState({
+            moves: this.state.moves+1,
             firstClickedId: "",
             isFlipped: false,
             temporaryFlippedCards: [],
@@ -103,12 +107,12 @@ class Board extends React.Component {
 
     //Generate and shuffle cards
     generateCards = level => {
-        let numOfCardPairsToGenerate;
-        let maxValueToIterate;
-        let imgSourceList;
+        let numOfCardPairsToGenerate; //depend of level - 6/10/15  easy/medium/hard
+        let maxValueToIterate;        // for loop which choose sources from these in the array depend of level
+        let imgSourceList;            // array of img sources, diffrent for each level
 
-        let cardsArr = [];
-        let randomGenerated = [];
+        let cardsArr = [];            // array of card objects with {imgSrc, id}
+        let randomGenerated = [];     //arr of rundom generated numbs, for checking if chosen one were chosen before
 
         // level='easy';
         //depends of level sets parameters
@@ -120,33 +124,41 @@ class Board extends React.Component {
 
                 this.setState({
                     numOfCardPairsToGenerate: 6,
+                    flippedClassName:'card flip',        // depends of level - responsible for sizing
+                    unflippedClassName:'card',
+                    boardClassName:'board',
                 });
                 break;
 
             case 'medium':
-                numOfCardPairsToGenerate = 6;
+                numOfCardPairsToGenerate = 10;
                 maxValueToIterate = this.mediumImgSrcs.length;
                 imgSourceList = this.mediumImgSrcs;
 
                 this.setState({
-                    numOfCardPairsToGenerate: 6,
+                    numOfCardPairsToGenerate: 10,
+                    flippedClassName:'card card-medium flip',   // depends of level - responsible for sizing
+                    unflippedClassName:'card card-medium',
+                    boardClassName:'board-medium',
                 });
                 break;
 
             case 'hard':
-                numOfCardPairsToGenerate = 6;
+                numOfCardPairsToGenerate = 15;
                 maxValueToIterate = this.hardImgSrcs.length;
                 imgSourceList = this.hardImgSrcs;
 
                 this.setState({
-                    numOfCardPairsToGenerate: 6,
+                    numOfCardPairsToGenerate: 15,
+                    flippedClassName:'card card-hard flip',   // depends of level - responsible for sizing
+                    unflippedClassName:'card card-hard',
+                    boardClassName:'board-hard',
                 });
                 break;
         }
 
         console.log(numOfCardPairsToGenerate);
         console.log(maxValueToIterate);
-        // console.log(imgSourceList);
 
 
         //----------------------GENERATING CARDS ------------------------------
@@ -158,8 +170,6 @@ class Board extends React.Component {
                 randomNum = Math.floor(Math.random() * (maxValueToIterate - 1) + 1)
             } while (randomGenerated.indexOf(randomNum) >=0 );
 
-            console.log(randomNum)
-            console.log(maxValueToIterate)
 
             randomGenerated.push(randomNum);
 
@@ -186,9 +196,9 @@ class Board extends React.Component {
 
     //flip clicked card if its id is on the list on temporary flipped
     flipCard = cardKey => {
-        const {temporaryFlippedCards} = this.state;
+        const {temporaryFlippedCards,unflippedClassName,flippedClassName} = this.state;
 
-        const className = temporaryFlippedCards.indexOf(cardKey) >= 0 ? 'card flip' : 'card';
+        const className = temporaryFlippedCards.indexOf(cardKey) >= 0 ? {flippedClassName} : {unflippedClassName};
 
         return className;
     }
@@ -201,14 +211,13 @@ class Board extends React.Component {
 
     render() {
 
+        const {boardClassName, flippedClassName} = this.state;
         //create all of cards based on genereted before cards parameters array
         const cardList = this.state.cards.map((card, index) => {
-
             //check if this card has flipped pair
             const isGuessed = this.isGuessed(card.id);
-
             //set flip state depends of if it's guessed, flipped or not flipped
-            const className = isGuessed ? 'card flip' : this.flipCard(index);
+            const className = isGuessed ? {flippedClassName} : this.flipCard(index);
 
             return <Card cardClicked={this.handleCardClick}
                          key={index}
@@ -221,14 +230,9 @@ class Board extends React.Component {
         });
 
 
-        const {guessedCardsList, numOfCardPairsToGenerate} = this.state;
-        //if number of guessed pairs is equal to number of pairs to generate GAME OVER
-        if (guessedCardsList.length === numOfCardPairsToGenerate) {
-            console.log('gameOver');
-            console.log(this.state.moves);
-        }
 
-        return <section className="board">
+
+        return <section className={boardClassName}>
             {cardList}
         </section>
     }

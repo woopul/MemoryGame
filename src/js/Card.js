@@ -23,6 +23,8 @@ class Card extends React.Component {
         const {level, imgSrc, className} = this.props;
 
 
+
+
         return (
             <div onClick={this.handleClick} className={className}>
                 <img className='front_face' src={imgSrc} alt={imgSrc + " logo"}/>

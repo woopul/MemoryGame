@@ -6,24 +6,24 @@ import Board from "./Board";
 //Render board game with choosen level
 class Game extends React.Component {
     state = {
-        levelChoosed: false,
+        isLevelChoosed: false,
         level:'',
     };
 
     handleNavClick = chosenLevel => {
         this.setState({
-            levelChoosed: true,
+            isLevelChoosed: true,
             level: chosenLevel,
         });
         console.log(chosenLevel);
     };
 
     render() {
-        const {levelChoosed, level} = this.state;
+        const {isLevelChoosed, level} = this.state;
         let renderElement;
 
-        // console.log(levelChoosed);
-        if (!levelChoosed) {
+        // console.log(isLevelChoosed);
+        if (!isLevelChoosed) {
             renderElement = <div>
                 <h1 className='game_title'>The memory game</h1>
                 <p className='choose_level'>choose level</p>
@@ -33,7 +33,7 @@ class Game extends React.Component {
             renderElement = <Board level={level}/>
         }
 
-        console.log(levelChoosed);
+        console.log(isLevelChoosed);
 
         return <div className="game_field">
             {renderElement}

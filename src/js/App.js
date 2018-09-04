@@ -9,7 +9,7 @@ class App extends React.Component {
         const particle = () => {
             particlesJS("particles-js", {
                 "particles": {
-                    "number": {"value": 160, "density": {"enable": true, "value_area": 800}},
+                    "number": {"value": 200, "density": {"enable": true, "value_area": 800}},
                     "color": {"value": "#ffffff"},
                     "shape": {
                         "type": "circle",
