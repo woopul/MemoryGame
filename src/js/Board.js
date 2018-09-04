@@ -136,8 +136,8 @@ class Board extends React.Component {
 
                 this.setState({
                     numOfCardPairsToGenerate: 10,
-                    flippedClassName:'card-medium flip',   // depends of level - responsible for sizing
-                    unflippedClassName:'card-medium',
+                    flippedClassName:'card card-medium flip',   // depends of level - responsible for sizing
+                    unflippedClassName:'card card-medium',
                     boardClassName:'board-medium',
                 });
                 break;
@@ -149,8 +149,8 @@ class Board extends React.Component {
 
                 this.setState({
                     numOfCardPairsToGenerate: 15,
-                    flippedClassName:'card-hard flip',   // depends of level - responsible for sizing
-                    unflippedClassName:'card-hard',
+                    flippedClassName:'card card-hard flip',   // depends of level - responsible for sizing
+                    unflippedClassName:'card card-hard',
                     boardClassName:'board-hard',
                 });
                 break;

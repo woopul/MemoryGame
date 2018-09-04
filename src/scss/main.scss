@@ -189,6 +189,16 @@ body {
             }
         }
     }
+
+    .card-medium {
+        width: calc(20% - 10px);
+        height: calc(25% - 10px);
+    }
+
+    .card-hard {
+        width: calc(16.666% - 10px);
+        height: calc(20% - 10px);
+    }
     //.card-medium {
     //    background: $background-card-color;
     //    width: calc(20% - 10px);
