@@ -43,7 +43,6 @@ class Game extends React.Component {
             </div>
         } else {
             renderElement = <div>
-                <h1>00:</h1>
                 <div className='return-btn' onClick={this.handleReturn}></div>
                 <Board isGameStared = {this.handleStartGame} level={level}/>
             </div>

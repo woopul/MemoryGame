@@ -4,7 +4,7 @@ class Card extends React.Component {
 
 
     handleClick = () => {
-        //if clicked - set isFlipped on true , send this' card id up to the board component
+        //if clicked - set isFlipped on true , send this card's id up to the board component
         //If cards with this id are matched or card is flipped - function is no longer executed
 
         const {className, matched} = this.props;

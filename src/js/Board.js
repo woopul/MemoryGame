@@ -1,11 +1,14 @@
 import React from "react";
 import Card from "./Card";
+import ScoreBoard from "./ScoreBoard"
 
 
 //Generate board of cards depends of a level from props
 class Board extends React.Component {
     state = {
+        start:false,
         moves: 0,
+
         isFlipped: false,           // stores information if card was clicked
         firstClickedId: '',         // stores index of first clicked card
         numOfCardPairsToGenerate:0, // depends of level ( 6, 8, 15);
@@ -34,8 +37,6 @@ class Board extends React.Component {
 
     //generate and asign cards || generating table of source images for medium and hard level
     componentDidMount() {
-
-
         //put img sources of card itno the table
         for (let i = 1; i <= 50; i++) {
             const mediumSrc = `../images/medium/(${i}).svg`;
@@ -63,6 +64,10 @@ class Board extends React.Component {
     handleCardClick = (currClickId, key) => {
         const {guessedCardsList, firstClickedId, isFlipped, temporaryFlippedCards} = this.state;
 
+        this.setState({
+            start: true,
+        })
+
         console.log(`ruchy: ${this.state.moves+1}`);
 
         //1st click
@@ -80,7 +85,6 @@ class Board extends React.Component {
                 this.setState({
                     guessedCardsList: [...guessedCardsList, currClickId],
                 });
-                console.log("TRAFIONE!!");
             }
 
             if (temporaryFlippedCards.length < 2) {
@@ -193,7 +197,7 @@ class Board extends React.Component {
         }
     };
 
-    //flip clicked card if its id is on the list on temporary flipped
+    //flip clicked card if it's id is on the list on temporary flipped
     flipCard = cardKey => {
         const {temporaryFlippedCards,unflippedClassName,flippedClassName} = this.state;
 
@@ -210,7 +214,7 @@ class Board extends React.Component {
 
     render() {
 
-        const {boardClassName, flippedClassName} = this.state;
+        const {boardClassName, flippedClassName, moves, start} = this.state;
         //create all of cards based on genereted before cards parameters array
         const cardList = this.state.cards.map((card, index) => {
             //check if this card has flipped pair
@@ -228,10 +232,12 @@ class Board extends React.Component {
                          imgSrc={card.imgSource}/>
         });
 
-
-        return <section className={boardClassName}>
-            {cardList}
-        </section>
+        return <div>
+            <ScoreBoard  start={start} moves={moves}  />
+            <section className={boardClassName}>
+                {cardList}
+            </section>
+        </div>
     }
 }
 
