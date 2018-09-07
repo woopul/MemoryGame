@@ -38,16 +38,16 @@ class Board extends React.Component {
 
         //put img sources of card itno the table
         for (let i = 1; i <= 50; i++) {
-            const mediumSrc = `../../pictures/medium/(${i}).svg`;
+            const mediumSrc = `../images/medium/(${i}).svg`;
             this.mediumImgSrcs.push(mediumSrc);
 
-            const hardSrc = `../../pictures/hard/(${i}).svg`;
+            const hardSrc = `../images/hard/(${i}).svg`;
             this.hardImgSrcs.push(hardSrc);
 
         }
 
         this.easyImgSrcs = this.easyImgSrcsTest.map(src =>{
-            return `../../pictures/${src}`
+            return `../images/${src}`
         });
 
         this.setState({
@@ -143,12 +143,12 @@ class Board extends React.Component {
                 break;
 
             case 'hard':
-                numOfCardPairsToGenerate = 15;
+                numOfCardPairsToGenerate = 16;
                 maxValueToIterate = this.hardImgSrcs.length;
                 imgSourceList = this.hardImgSrcs;
 
                 this.setState({
-                    numOfCardPairsToGenerate: 15,
+                    numOfCardPairsToGenerate: 16,
                     flippedClassName:'card card-hard flip',   // depends of level - responsible for sizing
                     unflippedClassName:'card card-hard',
                     boardClassName:'board-hard',
@@ -159,6 +159,8 @@ class Board extends React.Component {
         console.log("state:");
         console.log(this.state);
 
+
+
         //----------------------GENERATING CARDS ------------------------------
         for (let i = 0; i < numOfCardPairsToGenerate; i++) {
             let randomNum;
@@ -167,7 +169,6 @@ class Board extends React.Component {
             do {
                 randomNum = Math.floor(Math.random() * (maxValueToIterate - 1) + 1)
             } while (randomGenerated.indexOf(randomNum) >=0 );
-
 
             randomGenerated.push(randomNum);
 

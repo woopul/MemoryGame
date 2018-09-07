@@ -8,7 +8,9 @@ class Card extends React.Component {
         //If cards with this id are matched or card is flipped - function is no longer executed
 
         const {className, matched} = this.props;
-        const flipped = className === 'card flip';
+        const flipped = (className === 'card flip'
+            || className === 'card card-medium flip'
+            || className === 'card card-hard flip');
 
         if (matched === false && flipped === false) {
 
@@ -21,9 +23,8 @@ class Card extends React.Component {
 
     render() {
 
-        const {level, imgSrc, className} = this.props;
+        const {imgSrc, className} = this.props;
 
-        console.log(className);
         return (
             <div onClick={this.handleClick} className={className}>
                 <img className='front_face' src={imgSrc} alt={imgSrc + " logo"}/>
