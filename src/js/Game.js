@@ -21,20 +21,13 @@ class Game extends React.Component {
             isLevelChoosed: true,
             level: chosenLevel,
         });
-        console.log(chosenLevel);
     };
 
-    handleStartGame = state =>{
-        if(state){
-
-        }
-    }
 
     render() {
         const {isLevelChoosed, level} = this.state;
         let renderElement;
 
-        // console.log(isLevelChoosed);
         if (!isLevelChoosed) {
             renderElement = <div>
                 <h1 className='game_title'>The memory game</h1>
@@ -44,11 +37,9 @@ class Game extends React.Component {
         } else {
             renderElement = <div>
                 <div className='return-btn' onClick={this.handleReturn}></div>
-                <Board isGameStared = {this.handleStartGame} level={level}/>
+                <Board  level={level}/>
             </div>
         }
-
-        console.log(isLevelChoosed);
 
         return <div className="game_field">
             {renderElement}
