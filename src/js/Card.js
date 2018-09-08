@@ -28,7 +28,7 @@ class Card extends React.Component {
         return (
             <div onClick={this.handleClick} className={className}>
                 <img className='front_face' src={imgSrc} alt={imgSrc + " logo"}/>
-                <div className='back_face_container'><img className='back_face' src="../../pictures/react7.svg" alt="react logo"/></div>
+                <div className='back_face_container'><img className='back_face' src="../../src/images/react7.svg" alt="react logo"/></div>
             </div>
         )
     };

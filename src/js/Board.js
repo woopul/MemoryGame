@@ -39,10 +39,10 @@ class Board extends React.Component {
     componentDidMount() {
         //put img sources of card itno the table
         for (let i = 1; i <= 50; i++) {
-            const mediumSrc = `../images/medium/(${i}).svg`;
+            const mediumSrc = `../../src/images/medium/(${i}).svg`;
             this.mediumImgSrcs.push(mediumSrc);
 
-            const hardSrc = `../images/hard/(${i}).svg`;
+            const hardSrc = `../../src/images/hard/(${i}).svg`;
             this.hardImgSrcs.push(hardSrc);
 
         }
