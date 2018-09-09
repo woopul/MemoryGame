@@ -2,12 +2,20 @@ import React from "react";
 
 class ScoreBoard extends React.Component {
     state = {
+        miliseconds:0,
         minutes:0,
         seconds:0,
     };
 
     componentDidMount(){
+        this.startTimer();
+    }
 
+    componentDidUpdate(){
+        // if(this.props.start){
+        //     this.startTimer();
+        //
+        // }
     }
 
     componentWillUnmount(){
@@ -16,33 +24,36 @@ class ScoreBoard extends React.Component {
 
     startTimer = () => {
         let minutes=0,
-            seconds=0;
+            seconds=0,
+            miliseconds=0;
+
         this.idInterval = setInterval(() =>{
-            seconds ++;
+            miliseconds+=16;
+
+            if(miliseconds>=1000){
+                miliseconds=0;
+                seconds++;
+            }
+
             if(seconds === 60){
                 seconds = 0;
                 minutes ++;
             }
             this.setState({
+                miliseconds:miliseconds,
                 seconds: seconds,
                 minutes: minutes,
             })
-        },1000)
+        },20)
     };
 
 
     render(){
-        const{minutes, seconds, moves, start} = this.state;
+        const{minutes, seconds, miliseconds} = this.state;
 
-        if(this.props.start){
-            this.startTimer();
-        }
-
-        console.log(moves);
-        console.log(start);
 
         return <div className="score-board">
-            <p>{('0'+ minutes).slice(-2)}:{('0'+ seconds).slice(-2)}</p>
+            <p>{('0'+ minutes).slice(-2)}:{('0'+ seconds).slice(-2)}:{('0'+ miliseconds).slice(-2)}</p>
             <p>moves: {this.props.moves}</p>
         </div>
     }

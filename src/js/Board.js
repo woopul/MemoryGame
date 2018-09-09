@@ -6,8 +6,6 @@ import ScoreBoard from "./ScoreBoard"
 //Generate board of cards depends of a level from props
 class Board extends React.Component {
     state = {
-        start:false,
-        moves: 0,
 
         isFlipped: false,           // stores information if card was clicked
         firstClickedId: '',         // stores index of first clicked card
@@ -22,6 +20,10 @@ class Board extends React.Component {
         cards: [],                  // contain objects with generated card properties
         guessedCardsList: [],           // stores list of card indexes which were match
         temporaryFlippedCards: [],  // stores list of temp flipped cards (max 2)
+
+        start:false,
+        moves: 0,
+
     };
 
     //list of card imagaes used later with generating images
