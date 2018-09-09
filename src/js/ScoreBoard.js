@@ -1,4 +1,5 @@
 import React from "react";
+import gameState from "./gameState";
 
 class ScoreBoard extends React.Component {
     state = {
@@ -47,10 +48,16 @@ class ScoreBoard extends React.Component {
         },20)
     };
 
+    returnClearInterval =()=>{
+        if(gameState.gameOver){
+            clearInterval(this.idInterval);
+        }
+    };
 
     render(){
         const{minutes, seconds, miliseconds} = this.state;
 
+        this.returnClearInterval();
 
         return <div className="score-board">
             <p>{('0'+ minutes).slice(-2)}:{('0'+ seconds).slice(-2)}:{('0'+ miliseconds).slice(-2)}</p>

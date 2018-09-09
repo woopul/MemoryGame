@@ -12,9 +12,9 @@ class Game extends React.Component {
 
     handleReturn = () => {
         this.setState({
-            isLevelChoosed: false
+            isLevelChoosed: false,
         })
-    }
+    };
 
     handleNavClick = chosenLevel => {
         this.setState({
@@ -35,9 +35,9 @@ class Game extends React.Component {
                 <NavPanel isLevelChoosed={this.handleNavClick}/>
             </div>
         } else {
-            renderElement = <div>
-                <div className='return-btn' onClick={this.handleReturn}></div>
-                <Board  level={level}/>
+            renderElement =<div>
+                <div className="return-btn" onClick={this.handleReturn}></div>
+                <Board level={level}/>
             </div>
         }
 

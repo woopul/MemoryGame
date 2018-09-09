@@ -1,6 +1,7 @@
 import React from "react";
 import Card from "./Card";
 import ScoreBoard from "./ScoreBoard"
+import gameState from "./gameState";
 
 
 //Generate board of cards depends of a level from props
@@ -160,8 +161,6 @@ class Board extends React.Component {
                 });
                 break;
         }
-
-
         //----------------------GENERATING CARDS ------------------------------
         for (let i = 0; i < numOfCardPairsToGenerate; i++) {
             let randomNum;
@@ -197,22 +196,22 @@ class Board extends React.Component {
     flipCard = cardKey => {
         const {temporaryFlippedCards,unflippedClassName,flippedClassName} = this.state;
 
-        const className = temporaryFlippedCards.indexOf(cardKey) >= 0 ? flippedClassName : unflippedClassName;
-
-        return className;
-    }
+        return  temporaryFlippedCards.indexOf(cardKey) >= 0 ? flippedClassName : unflippedClassName;
+    };
 
     //check if current genereted card id is on the list of guessed
     isGuessed = cardId => {
-        const isGuessed = this.state.guessedCardsList.indexOf(cardId) >= 0;
-        return isGuessed;
+        return this.state.guessedCardsList.indexOf(cardId) >= 0;
     };
 
     render() {
 
-        const {boardClassName, flippedClassName, moves, start} = this.state;
+        const {guessedCardsList, boardClassName, flippedClassName, moves, start, numOfCardPairsToGenerate} = this.state;
         //create all of cards based on genereted before cards parameters array
 
+        if(guessedCardsList.length === 1){
+            gameState.gameOver = true;
+        }
 
         const cardList = this.state.cards.map((card, index) => {
             //check if this card has flipped pair
@@ -230,9 +229,7 @@ class Board extends React.Component {
                          imgSrc={card.imgSource}/>
         });
 
-        // console.log('Board props to Score Board: moves, start');
-        // console.log(moves, start);
-        // console.log('----------');
+
         return <div>
             <ScoreBoard start={start} moves={moves}  />
             <section className={boardClassName}>
