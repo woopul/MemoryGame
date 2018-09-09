@@ -4,10 +4,10 @@ import Card from "./Card";
 import ScoreBoard from "./ScoreBoard"
 import gameState from "./gameState";
 
-
 //Generate board of cards depends of a level from props
 class Board extends React.Component {
     state = {
+        loaded:false,
 
         isFlipped: false,           // stores information if card was clicked
         firstClickedId: '',         // stores index of first clicked card
@@ -56,7 +56,8 @@ class Board extends React.Component {
         });
 
         this.setState({
-            cards: this.generateCards(this.props.level)
+            cards: this.generateCards(this.props.level),
+            loaded:true,
         });
     }
 
@@ -86,12 +87,14 @@ class Board extends React.Component {
             if (firstClickedId === currClickId) {
                 this.setState({
                     guessedCardsList: [...guessedCardsList, currClickId],
+                    moves: this.state.moves+1,
                 });
             }
 
             if (temporaryFlippedCards.length < 2) {
                 this.setState({
                     temporaryFlippedCards: [...temporaryFlippedCards, key],
+                    moves: this.state.moves+1,
                 });
             }
 
@@ -103,7 +106,6 @@ class Board extends React.Component {
 
     resetTempValues = () => {
         this.setState({
-            moves: this.state.moves+1,
             firstClickedId: "",
             isFlipped: false,
             temporaryFlippedCards: [],
@@ -165,7 +167,7 @@ class Board extends React.Component {
         for (let i = 0; i < numOfCardPairsToGenerate; i++) {
             let randomNum;
 
-            // select (6 || 10 || 16) different random nums, where max value is max pic arr value
+            // select (6 || 10 || 16) different random nums, where max value is picture arr length
             do {
                 randomNum = Math.floor(Math.random() * (maxValueToIterate - 1) + 1)
             } while (randomGenerated.indexOf(randomNum) >=0 );
@@ -206,10 +208,12 @@ class Board extends React.Component {
 
     render() {
 
-        const {guessedCardsList, boardClassName, flippedClassName, moves, start, numOfCardPairsToGenerate} = this.state;
+        const {guessedCardsList, boardClassName, flippedClassName, moves, start,loaded, numOfCardPairsToGenerate} = this.state;
         //create all of cards based on genereted before cards parameters array
 
-        if(guessedCardsList.length === 1){
+
+        //for stoping interval in scoreboard
+        if(loaded && guessedCardsList.length === numOfCardPairsToGenerate){
             gameState.gameOver = true;
         }
 
@@ -230,7 +234,7 @@ class Board extends React.Component {
         });
 
         return <div>
-            {start && <FadeIn> <ScoreBoard moves={moves}/></FadeIn>}
+            {start && <FadeIn transitionDuration={800}> <ScoreBoard moves={moves}/></FadeIn>}
             <section className={boardClassName}>
                 {cardList}
             </section>

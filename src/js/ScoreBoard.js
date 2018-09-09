@@ -12,13 +12,6 @@ class ScoreBoard extends React.Component {
         this.startTimer();
     }
 
-    componentDidUpdate(){
-        // if(this.props.start){
-        //     this.startTimer();
-        //
-        // }
-    }
-
     componentWillUnmount(){
         clearInterval(this.idInterval);
     }
@@ -29,9 +22,10 @@ class ScoreBoard extends React.Component {
             miliseconds=0;
 
         this.idInterval = setInterval(() =>{
-            miliseconds+=16;
+            console.log("blabla");
+            miliseconds+=5;
 
-            if(miliseconds>=1000){
+            if(miliseconds>=95){
                 miliseconds=0;
                 seconds++;
             }
@@ -45,10 +39,11 @@ class ScoreBoard extends React.Component {
                 seconds: seconds,
                 minutes: minutes,
             })
-        },20)
+        },50)
     };
 
-    returnClearInterval =()=>{
+    //clear interval if gameOver or returned
+    gameOverClearInterval =()=>{
         if(gameState.gameOver){
             clearInterval(this.idInterval);
         }
@@ -57,10 +52,10 @@ class ScoreBoard extends React.Component {
     render(){
         const{minutes, seconds, miliseconds} = this.state;
 
-        this.returnClearInterval();
+        this.gameOverClearInterval();
 
         return <div className="score-board">
-            <p>{('0'+ minutes).slice(-2)}:{('0'+ seconds).slice(-2)}:{('0'+ miliseconds).slice(-2)}</p>
+            <p>{('0'+ minutes).slice(-2)}:{('0'+ seconds).slice(-2)}:{("0"+miliseconds).slice(-2)}</p>
             <p>moves: {this.props.moves}</p>
         </div>
     }

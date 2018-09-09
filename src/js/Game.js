@@ -1,6 +1,7 @@
 import React from "react";
 import NavPanel from "./NavPanel";
 import Board from "./Board";
+import gameState from"./gameState"
 
 
 //Render board game with choosen level
@@ -11,12 +12,15 @@ class Game extends React.Component {
     };
 
     handleReturn = () => {
+        gameState.gameOver=false;
+
         this.setState({
             isLevelChoosed: false,
         })
     };
 
     handleNavClick = chosenLevel => {
+
         this.setState({
             isLevelChoosed: true,
             level: chosenLevel,
