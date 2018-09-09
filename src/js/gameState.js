@@ -3,6 +3,8 @@ import {store} from 'react-easy-state';
 const gameState = store({
     gameStart: false,
     gameOver: false,
+    timeScore:"",
+    moves:"",
 });
 
 export default gameState;

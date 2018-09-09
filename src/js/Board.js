@@ -2,6 +2,7 @@ import React from "react";
 import FadeIn from "react-fade-in";
 import Card from "./Card";
 import ScoreBoard from "./ScoreBoard"
+import GameOver from "./GameOver"
 import gameState from "./gameState";
 
 //Generate board of cards depends of a level from props
@@ -213,7 +214,7 @@ class Board extends React.Component {
 
 
         //for stoping interval in scoreboard
-        if(loaded && guessedCardsList.length === numOfCardPairsToGenerate){
+        if(loaded && guessedCardsList.length === 1){
             gameState.gameOver = true;
         }
 
@@ -234,6 +235,7 @@ class Board extends React.Component {
         });
 
         return <div>
+            {gameState.gameOver && <GameOver />}
             {start && <FadeIn transitionDuration={800}> <ScoreBoard moves={moves}/></FadeIn>}
             <section className={boardClassName}>
                 {cardList}
