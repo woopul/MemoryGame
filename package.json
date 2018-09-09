@@ -30,6 +30,7 @@
     "react": "^16.4.2",
     "react-dom": "^16.4.2",
     "react-easy-state": "^5.1.0",
+    "react-fade-in": "^0.1.6",
     "sass-loader": "^7.1.0",
     "style-loader": "^0.22.1",
     "url-loader": "^1.1.1",

@@ -1,4 +1,5 @@
 import React from "react";
+import FadeIn from "react-fade-in";
 import Card from "./Card";
 import ScoreBoard from "./ScoreBoard"
 import gameState from "./gameState";
@@ -70,7 +71,6 @@ class Board extends React.Component {
         this.setState({
             start: true,
         });
-
 
         //1st click
         if (isFlipped === false) {
@@ -229,9 +229,8 @@ class Board extends React.Component {
                          imgSrc={card.imgSource}/>
         });
 
-
         return <div>
-            <ScoreBoard start={start} moves={moves}  />
+            {start && <FadeIn> <ScoreBoard moves={moves}/></FadeIn>}
             <section className={boardClassName}>
                 {cardList}
             </section>
