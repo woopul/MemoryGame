@@ -7,8 +7,8 @@ class GameOver extends React.Component {
         return <div className="game-over">
             <div className="game-over-field">
                 <div>Your Score: {gameState.timeScore} moves:{gameState.moves}</div>
-                <div>Your name:</div>
-                <input type="text"/>
+                <div>Your name: <input type="text"/></div>
+                <div className="menu-back-btn">MENU</div>
             </div>
         </div>
     }
