@@ -236,7 +236,7 @@ class Board extends React.Component {
         });
 
         return <div>
-            {gameState.gameOver && <GameOver />}
+            {gameState.gameOver && <GameOver level={this.props.level}/>}
             {start && <FadeIn transitionDuration={800}> <ScoreBoard moves={moves}/></FadeIn>}
             <section className={boardClassName}>
                 {cardList}

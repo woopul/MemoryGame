@@ -5,20 +5,21 @@ import {view} from "react-easy-state";
 class GameOver extends React.Component {
 
 
-    handleTryAgain = () =>{
-        gameState.gameOver=false;
+    handleTryAgain = () => {
+        gameState.level=this.props.level;
+        gameState.gameOver = false;
 
-        gameState.timeScore="";
-        gameState.moves="";
-    }
+        gameState.timeScore = "";
+        gameState.moves = "";
+    };
 
-    handleMenuClick =() =>{
+    handleMenuClick = () => {
 
         gameState.choosenLevel = "";
-        gameState.gameOver=false;
+        gameState.gameOver = false;
 
-        gameState.timeScore="";
-        gameState.moves="";
+        gameState.timeScore = "";
+        gameState.moves = "";
     };
 
     render() {

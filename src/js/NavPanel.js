@@ -1,5 +1,6 @@
 import React from "react";
-import gameState from "./gameState"
+import gameState from "./gameState";
+import {view} from "react-easy-state";
 
 class LevelButton extends React.Component {
 
@@ -31,4 +32,4 @@ class NavPanel extends React.Component {
     }
 }
 
-export default NavPanel
+export default view(NavPanel);
