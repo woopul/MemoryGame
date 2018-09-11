@@ -252,14 +252,22 @@ body {
         height: 500px;
         border: 1px solid grey;
         display: flex;
-        justify-content: center;
+        align-items: center;
+        flex-direction: column;
 
         .menu-back-btn{
             width:80px;
             height: 30px;
             border-radius: 10px;
             color: white;
+            font-size: 20px;
 
+
+            background: rgba(203,224,200,0.27);
+            &:hover{
+                cursor: pointer;
+                transform: scale(1.05);
+            }
         }
     }
 }

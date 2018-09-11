@@ -1,47 +1,32 @@
 import React from "react";
 import NavPanel from "./NavPanel";
 import Board from "./Board";
-import gameState from"./gameState"
+import gameState from "./gameState"
 
 
 //Render board game with choosen level
 class Game extends React.Component {
-    state = {
-        isLevelChoosed: false,
-        level:'',
-    };
+
 
     handleReturn = () => {
-        gameState.gameOver=false;
-
-        this.setState({
-            isLevelChoosed: false,
-        })
-    };
-
-    handleNavClick = chosenLevel => {
-
-        this.setState({
-            isLevelChoosed: true,
-            level: chosenLevel,
-        });
+        gameState.gameOver = false;
+        gameState.choosenLevel = "";
     };
 
 
     render() {
-        const {isLevelChoosed, level} = this.state;
         let renderElement;
 
-        if (!isLevelChoosed) {
+        if (gameState.choosenLevel === "") {
             renderElement = <div>
                 <h1 className='game_title'>The memory game</h1>
                 <p className='choose_level'>choose level</p>
-                <NavPanel isLevelChoosed={this.handleNavClick}/>
+                <NavPanel/>
             </div>
         } else {
-            renderElement =<div>
+            renderElement = <div>
                 <div className="return-btn" onClick={this.handleReturn}></div>
-                <Board level={level}/>
+                <Board level={gameState.choosenLevel}/>
             </div>
         }
 

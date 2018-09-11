@@ -1,11 +1,15 @@
 import React from "react";
+import gameState from "./gameState"
 
 class LevelButton extends React.Component {
 
     handleClick = () => {
-        if (typeof this.props.LevelButtonClicked === 'function') {
-            this.props.LevelButtonClicked(this.props.level);
-        }
+        // if (typeof this.props.LevelButtonClicked === 'function') {
+        //     this.props.LevelButtonClicked(this.props.level);
+        // }
+        gameState.choosenLevel = this.props.level;
+        console.log(gameState.choosenLevel);
+
     };
 
     render() {
@@ -19,9 +23,9 @@ class NavPanel extends React.Component {
 
     render() {
         return <div className="nav_panel">
-                <LevelButton LevelButtonClicked={this.props.isLevelChoosed} level="easy"/>
-                <LevelButton LevelButtonClicked={this.props.isLevelChoosed} level="medium"/>
-                <LevelButton LevelButtonClicked={this.props.isLevelChoosed} level="hard"/>
+                <LevelButton  level="easy"/>
+                <LevelButton  level="medium"/>
+                <LevelButton  level="hard"/>
 
         </div>
     }
