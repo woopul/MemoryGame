@@ -1,6 +1,7 @@
 import React from "react";
 import NavPanel from "./NavPanel";
 import Board from "./Board";
+import {view} from "react-easy-state"
 import gameState from "./gameState"
 
 
@@ -37,4 +38,4 @@ class Game extends React.Component {
     }
 }
 
-export default Game;
+export default view(Game);

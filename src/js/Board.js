@@ -1,8 +1,9 @@
 import React from "react";
 import FadeIn from "react-fade-in";
 import Card from "./Card";
-import ScoreBoard from "./ScoreBoard"
-import GameOver from "./GameOver"
+import ScoreBoard from "./ScoreBoard";
+import GameOver from "./GameOver";
+import {view} from "react-easy-state";
 import gameState from "./gameState";
 
 //Generate board of cards depends of a level from props
@@ -245,4 +246,4 @@ class Board extends React.Component {
 }
 
 
-export default Board
+export default view(Board);
