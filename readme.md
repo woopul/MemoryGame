@@ -1,27 +1,5 @@
-# Webpack React Demo App
+The Memory Game - simple, animated, created fully in react game with 3 levels of difficulty
 
-### How to install:
-1. `git clone https://github.com/beniaminrychter/webpack-react-demo`
-2. `cd webpack-react-demo`
-3. `npm i`
+![](images/screen/screen1.png)
 
-Then `npm start` for development mode, and `npm run build` for production.
-
-In development mode, localhost server will run on `localhost:8080` with autoreloading.
-
-
-### File structure:
-```
-src/
-    images/
-    scss/
-    js/
-    index.js
-    index.html
-.babelrc
-webpack.config.js
-package.json
-```
-
-- `index.html` in `src` folder is a HTML template for our project.
-- `index.js` in `src` folder is main JavaScript file with ReactDOM.render() function. This is good place to import `scss` file.
+![](images/screen/screen2.png)
