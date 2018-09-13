@@ -3,7 +3,7 @@ import {store} from 'react-easy-state';
 const gameState = store({
     choosenLevel:"",
 
-    gameOver: true,
+    gameOver: false,
 
     timeScore:"",
     moves:"",
