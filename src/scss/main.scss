@@ -81,9 +81,11 @@ body {
             align-items: center;
             box-shadow: 3px 4px 13px 4px #343539;
 
+            transition: transform, filter 1s,0.5s;
+
             &:hover {
                 cursor: pointer;
-                filter: brightness(110%);
+                filter: brightness(120%);
                 transform: scale(1.02);
             }
 
