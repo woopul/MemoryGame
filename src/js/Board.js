@@ -215,7 +215,7 @@ class Board extends React.Component {
 
 
         //for stoping interval in scoreboard
-        if(loaded && guessedCardsList.length === numOfCardPairsToGenerate){
+        if(loaded && guessedCardsList.length === 0){
             gameState.gameOver = true;
         }
 

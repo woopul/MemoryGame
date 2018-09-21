@@ -28,8 +28,8 @@ class GameOver extends React.Component {
                 <div>Your Score: {gameState.timeScore} moves:{gameState.moves}</div>
                 <div>Your name: <input type="text"/></div>
                 <div className="game-over-btns">
-                    <div onClick={this.handleMenuClick} className="menu-back-btn"><p>MENU</p></div>
-                    <div onClick={this.handleTryAgain} className="menu-back-btn"><p>TRY AGAIN</p></div>
+                    <div  onClick={this.handleMenuClick} className="menu-back-btn"/>
+                    {/*<div onClick={this.handleTryAgain} className="menu-back-btn"><p>TRY AGAIN</p></div>*/}
                 </div>
             </div>
         </div>

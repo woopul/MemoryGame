@@ -26,7 +26,7 @@ class Game extends React.Component {
             </div>
         } else {
             renderElement = <div>
-                <div className="return-btn" onClick={this.handleReturn}></div>
+                <div className="return-btn" onClick={this.handleReturn}/>
                 <Board level={gameState.choosenLevel}/>
             </div>
         }

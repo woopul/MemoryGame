@@ -261,8 +261,8 @@ body {
         }
 
         .menu-back-btn{
-            width:80px;
-            height: 30px;
+            width:40px;
+            height: 40px;
             border-radius: 10px;
             color: white;
             font-size: 20px;
@@ -271,11 +271,19 @@ body {
             margin-right: 10px;
             //padding: 10px;
 
+            background: url("../images/others/restart.png");
+            background-size: contain;
+            background-repeat: no-repeat;
+            //transform: rotate(-45deg);
 
-            background: rgba(203,224,200,0.27);
+
+            transition: opacity,transform 1s, 1s;
+            opacity: 0.6;
+
             &:hover{
                 cursor: pointer;
-                transform: scale(1.05);
+                opacity: 1;
+                transform: scale(1.2) rotate(30deg);
             }
         }
     }
