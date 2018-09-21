@@ -242,7 +242,7 @@ body {
     z-index: 999;
     width: 100vw;
     height:100vh;
-    background: rgba(159,180,157,0.32);
+    background: rgba(0,0,0,0.6);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -250,11 +250,30 @@ body {
     .game-over-field{
         width: 500px;
         height: 500px;
-        border: 1px solid grey;
+        //border: 1px solid grey;
         display: flex;
         align-items: center;
         justify-content: center;
         flex-direction: column;
+        font-family: 'Raleway', sans-serif;
+        color: rgba(255,255,255,0.75);
+
+
+
+        .game-over-text {
+            font-size: 70px;
+            font-weight: 600;
+            letter-spacing: 3px;
+            font-style: italic;
+            margin-bottom: 50px;
+
+        }
+
+        .score {
+            font-size: 30px;
+            font-weight: 500;
+            font-style: italic;
+        }
 
         .game-over-btns{
             display: flex;

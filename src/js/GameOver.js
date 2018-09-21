@@ -25,10 +25,13 @@ class GameOver extends React.Component {
     render() {
         return <div className="game-over">
             <div className="game-over-field">
-                <div>Your Score: {gameState.timeScore} moves:{gameState.moves}</div>
-                <div>Your name: <input type="text"/></div>
+                <div className="game-over-text">Game Over</div>
+                <div className="score">
+                    Your Score: {gameState.timeScore} <br/> Moves:{gameState.moves}
+                </div>
+                {/*<div>Your name: <input type="text"/></div>*/}
                 <div className="game-over-btns">
-                    <div  onClick={this.handleMenuClick} className="menu-back-btn"/>
+                    <div onClick={this.handleMenuClick} className="menu-back-btn"/>
                     {/*<div onClick={this.handleTryAgain} className="menu-back-btn"><p>TRY AGAIN</p></div>*/}
                 </div>
             </div>
