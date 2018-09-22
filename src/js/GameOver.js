@@ -5,6 +5,9 @@ import {Animate} from "react-show";
 
 class GameOver extends React.Component {
 
+    state ={
+        show: true,
+    }
 
     handleTryAgain = () => {
         gameState.level = this.props.level;
@@ -15,12 +18,18 @@ class GameOver extends React.Component {
     };
 
     handleMenuClick = () => {
+        this.setState({
+            show: !this.state.show,
+        });
 
-        gameState.choosenLevel = "";
-        gameState.gameOver = false;
+        setTimeout(() => {
+            gameState.choosenLevel = "";
+            gameState.gameOver = false;
 
-        gameState.timeScore = "";
-        gameState.moves = "";
+            gameState.timeScore = "";
+            gameState.moves = "";
+        }, 2000);
+
     };
 
     render() {
@@ -41,7 +50,7 @@ class GameOver extends React.Component {
 
         return <div className="game-over">
             <Animate
-                show={true}
+                show={this.state.show}
                 transitionOnMount
                 duration={2500}
                 style={{
