@@ -102,7 +102,7 @@ class Board extends React.Component {
 
             setTimeout(() => {
                 this.resetTempValues();
-            }, 500)
+            }, 400)
         }
     };
 
@@ -215,7 +215,7 @@ class Board extends React.Component {
 
 
         //for stoping interval in scoreboard
-        if(loaded && guessedCardsList.length === 0){
+        if(loaded && guessedCardsList.length === numOfCardPairsToGenerate){
             gameState.gameOver = true;
         }
 

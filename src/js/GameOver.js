@@ -28,7 +28,7 @@ class GameOver extends React.Component {
 
             gameState.timeScore = "";
             gameState.moves = "";
-        }, 2000);
+        }, 1500);
 
     };
 
@@ -38,7 +38,7 @@ class GameOver extends React.Component {
             <div className="game-over-field">
                 <div className="game-over-text">Game Over</div>
                 <div className="score">
-                    Your Score: {gameState.timeScore} <br/> Moves:{gameState.moves}
+                    Your Score: {gameState.timeScore} <br/> Moves:       {gameState.moves}
                 </div>
                 {/*<div>Your name: <input type="text"/></div>*/}
                 <div className="game-over-btns">
@@ -52,7 +52,7 @@ class GameOver extends React.Component {
             <Animate
                 show={this.state.show}
                 transitionOnMount
-                duration={2500}
+                duration={2000}
                 style={{
                     height: "auto"
                 }}
