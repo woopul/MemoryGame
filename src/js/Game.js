@@ -8,12 +8,10 @@ import gameState from "./gameState"
 //Render board game with choosen level
 class Game extends React.Component {
 
-
     handleReturn = () => {
         gameState.gameOver = false;
         gameState.choosenLevel = "";
     };
-
 
     render() {
         let renderElement;
@@ -37,5 +35,4 @@ class Game extends React.Component {
         </div>
     }
 }
-
 export default view(Game);
