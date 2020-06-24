@@ -50,7 +50,6 @@ class Board extends React.Component {
 
             const hardSrc = `../../src/images/hard/(${i}).svg`;
             this.hardImgSrcs.push(hardSrc);
-
         }
 
         this.easyImgSrcs = this.easyImgSrcsTest.map(src =>{
@@ -189,7 +188,7 @@ class Board extends React.Component {
         return cardsArr;
     };
 
-    shuffle = cardList => {
+    shuffle =   cardList => {
         for (let i = cardList.length; i; i--) {
             let j = Math.floor(Math.random() * i);
             [cardList[i - 1], cardList[j]] = [cardList[j], cardList[i - 1]];
@@ -198,7 +197,7 @@ class Board extends React.Component {
 
     //flip clicked card if it's id is on the list on temporary flipped
     flipCard = cardKey => {
-        const {temporaryFlippedCards,unflippedClassName,flippedClassName} = this.state;
+        const { temporaryFlippedCards, unflippedClassName, flippedClassName } = this.state;
 
         return  temporaryFlippedCards.indexOf(cardKey) >= 0 ? flippedClassName : unflippedClassName;
     };
@@ -209,10 +208,8 @@ class Board extends React.Component {
     };
 
     render() {
-
-        const {guessedCardsList, boardClassName, flippedClassName, moves, start,loaded, numOfCardPairsToGenerate} = this.state;
+        const { guessedCardsList, boardClassName, flippedClassName, moves, start,loaded, numOfCardPairsToGenerate } = this.state;
         //create all of cards based on genereted before cards parameters array
-
 
         //for stoping interval in scoreboard
         if(loaded && guessedCardsList.length === numOfCardPairsToGenerate){
@@ -220,10 +217,8 @@ class Board extends React.Component {
         }
 
         const cardList = this.state.cards.map((card, index) => {
-            //check if this card has flipped pair
-            const isGuessed = this.isGuessed(card.id);
-            //set flip state depends of if it's guessed, flipped or not flipped
-            const className = isGuessed ? flippedClassName : this.flipCard(index);
+            const isGuessed = this.isGuessed(card.id); //check if this card has flipped pair
+            const className = isGuessed ? flippedClassName : this.flipCard(index); //set flip state depends of if it's guessed, flipped or not flipped
 
             return <Card cardClicked={this.handleCardClick}
                          key={index}

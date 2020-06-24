@@ -1,12 +1,12 @@
-import {store} from 'react-easy-state';
+import { store } from "react-easy-state";
 
 const gameState = store({
-    choosenLevel:"",
+  choosenLevel: "",
 
-    gameOver: false,
+  gameOver: true,
 
-    timeScore:"",
-    moves:"",
+  timeScore: "",
+  moves: "",
 });
 
 export default gameState;

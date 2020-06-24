@@ -9,7 +9,7 @@ class App extends React.Component {
         const particle = () => {
             particlesJS("particles-js", {
                 "particles": {
-                    "number": {"value": 160, "density": {"enable": true, "value_area": 800}},
+                    "number": {"value": 160, "density": {"enable": true, "value_area": 600}},
                     "color": {"value": "#ffffff"},
                     "shape": {
                         "type": "circle",
@@ -56,7 +56,7 @@ class App extends React.Component {
                 },
                 "retina_detect": true
             });
-        }
+        };
         particle();
         return (
             <Game/>
