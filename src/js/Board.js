@@ -3,9 +3,9 @@ import FadeIn from "react-fade-in";
 import Card from "./Card";
 import ScoreBoard from "./ScoreBoard";
 import GameOver from "./GameOver";
-import {view} from "react-easy-state";
+import { view } from "react-easy-state";
 import gameState from "./gameState";
-import easyImgSrcs from "./svgs/easy";
+import { easyImgSrcs, mediumImgSrcs, hardImgSrcs } from "./svgs/easy";
 
 //Generate board of cards depends of a level from props
 class Board extends React.Component {
@@ -30,26 +30,10 @@ class Board extends React.Component {
         moves: 0,
     };
 
-    //list of card imagaes used later with generating images
-
-    mediumImgSrcs = [];
-    hardImgSrcs = [];
-
-    //generate and asign cards || generating table of source images for medium and hard level
     componentDidMount() {
-        //put img sources of card itno the table
-        console.log('src images: ', easyImgSrcs)
-        for (let i = 1; i <= 50; i++) {
-            const mediumSrc = `../images/medium/(${i}).svg`;
-            this.mediumImgSrcs.push(mediumSrc);
-
-            const hardSrc = `../../src/images/hard/(${i}).svg`;
-            this.hardImgSrcs.push(hardSrc);
-        }
-
         this.setState({
             cards: this.generateCards(this.props.level),
-            loaded:true,
+            loaded: true,
         });
     }
 
@@ -130,8 +114,8 @@ class Board extends React.Component {
 
             case 'medium':
                 numOfCardPairsToGenerate = 10;
-                maxValueToIterate = this.mediumImgSrcs.length;
-                imgSourceList = this.mediumImgSrcs;
+                maxValueToIterate = mediumImgSrcs.length;
+                imgSourceList = mediumImgSrcs;
 
                 this.setState({
                     numOfCardPairsToGenerate: 10,
@@ -143,8 +127,8 @@ class Board extends React.Component {
 
             case 'hard':
                 numOfCardPairsToGenerate = 16;
-                maxValueToIterate = this.hardImgSrcs.length;
-                imgSourceList = this.hardImgSrcs;
+                maxValueToIterate = hardImgSrcs.length;
+                imgSourceList = hardImgSrcs;
 
                 this.setState({
                     numOfCardPairsToGenerate: 16,
@@ -199,7 +183,6 @@ class Board extends React.Component {
 
     render() {
         const { guessedCardsList, boardClassName, flippedClassName, moves, start,loaded, numOfCardPairsToGenerate } = this.state;
-        //create all of cards based on genereted before cards parameters array
 
         //for stoping interval in scoreboard
         if(loaded && guessedCardsList.length === numOfCardPairsToGenerate){
@@ -230,6 +213,5 @@ class Board extends React.Component {
         </div>
     }
 }
-
 
 export default view(Board);
