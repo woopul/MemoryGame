@@ -5,6 +5,7 @@ import ScoreBoard from "./ScoreBoard";
 import GameOver from "./GameOver";
 import {view} from "react-easy-state";
 import gameState from "./gameState";
+import easyImgSrcs from "./svgs/easy";
 
 //Generate board of cards depends of a level from props
 class Board extends React.Component {
@@ -27,41 +28,30 @@ class Board extends React.Component {
 
         start:false,
         moves: 0,
-
     };
 
     //list of card imagaes used later with generating images
-    easyImgSrcsTest = ["css3.svg", "angular.svg", "aurelia.svg", "backbone.svg", "ember.svg",
-        "js-badge.svg", "vue.svg", "pinguin.svg", "nodejs2.svg", "visual-basic.svg"];
 
-    // easyImgSrcs = ["css3.svg", "angular.svg", "aurelia.svg", "backbone.svg", "ember.svg",
-    //     "js-badge.svg", "vue.svg", "pinguin.svg", "nodejs2.svg", "visual-basic.svg"];
-    easyImgSrcs = [];
     mediumImgSrcs = [];
     hardImgSrcs = [];
-
 
     //generate and asign cards || generating table of source images for medium and hard level
     componentDidMount() {
         //put img sources of card itno the table
+        console.log('src images: ', easyImgSrcs)
         for (let i = 1; i <= 50; i++) {
-            const mediumSrc = `../../src/images/medium/(${i}).svg`;
+            const mediumSrc = `../images/medium/(${i}).svg`;
             this.mediumImgSrcs.push(mediumSrc);
 
             const hardSrc = `../../src/images/hard/(${i}).svg`;
             this.hardImgSrcs.push(hardSrc);
         }
 
-        this.easyImgSrcs = this.easyImgSrcsTest.map(src =>{
-            return `../../src/images/${src}`
-        });
-
         this.setState({
             cards: this.generateCards(this.props.level),
             loaded:true,
         });
     }
-
 
     //1st click - asign id of clicked card to temp var in state | change var isFlipped on true
     //2st click - check if id of second card is the same as first one
@@ -127,8 +117,8 @@ class Board extends React.Component {
         switch (level) {
             case 'easy':
                 numOfCardPairsToGenerate = 6;
-                maxValueToIterate = this.easyImgSrcs.length;
-                imgSourceList = this.easyImgSrcs;
+                maxValueToIterate = easyImgSrcs.length;
+                imgSourceList = easyImgSrcs;
 
                 this.setState({
                     numOfCardPairsToGenerate: 6,
@@ -188,7 +178,7 @@ class Board extends React.Component {
         return cardsArr;
     };
 
-    shuffle =   cardList => {
+    shuffle = cardList => {
         for (let i = cardList.length; i; i--) {
             let j = Math.floor(Math.random() * i);
             [cardList[i - 1], cardList[j]] = [cardList[j], cardList[i - 1]];
@@ -221,13 +211,14 @@ class Board extends React.Component {
             const className = isGuessed ? flippedClassName : this.flipCard(index); //set flip state depends of if it's guessed, flipped or not flipped
 
             return <Card cardClicked={this.handleCardClick}
-                         key={index}
-                         index={index}
-                         id={card.id}
-                         level={this.props.level}
-                         matched={isGuessed}
-                         className={className}
-                         imgSrc={card.imgSource}/>
+                        key={index}
+                        index={index}
+                        id={card.id}
+                        level={this.props.level}
+                        matched={isGuessed}
+                        className={className}
+                        imgSrc={card.imgSource}
+                        />
         });
 
         return <div>

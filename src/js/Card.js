@@ -1,4 +1,5 @@
 import React from "react";
+import reactLogo from "../images/react7.svg"
 
 class Card extends React.Component {
   handleClick = () => {
@@ -27,7 +28,7 @@ class Card extends React.Component {
         <div className="back_face_container">
           <img
             className="back_face"
-            src="../../src/images/react7.svg"
+            src={reactLogo}
             alt="react logo"
           />
         </div>

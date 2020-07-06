@@ -105,19 +105,6 @@ module.exports = function (env) {
 
   config.module.rules.push(fonts);
 
-    const svg = {
-          test: /\.svg$/,
-          use: {
-              loader: 'svg-url-loader',
-              options: {
-                limit: 10000,
-              },
-            },
-      },
-    };
-
-    config.module.rules.push(svg);
-
   config.plugins = [];
 
   config.plugins.push(

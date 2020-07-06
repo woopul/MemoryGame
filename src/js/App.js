@@ -4,7 +4,6 @@ import Game from './Game'
 
 
 class App extends React.Component {
-
     render() {
         const particle = () => {
             particlesJS("particles-js", {

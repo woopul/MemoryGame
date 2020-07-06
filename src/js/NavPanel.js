@@ -6,7 +6,7 @@ class LevelButton extends React.Component {
 
     handleClick = () => {
         gameState.choosenLevel = this.props.level;
-        console.log(gameState.choosenLevel);
+        console.log('choosen level:', gameState.choosenLevel);
     };
     render() {
         const {level} = this.props;
