@@ -13,7 +13,6 @@ class Game extends React.Component {
 
   showGameOverWindow = () => {
     gameState.gameOver = !gameState.gameOver;
-    console.log('<Game>, toogle gameOver, value:', gameState.gameOver);
   };
 
   render() {

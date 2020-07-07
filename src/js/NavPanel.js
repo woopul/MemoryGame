@@ -2,24 +2,20 @@ import React from "react";
 import gameState from "./gameState";
 import {view} from "react-easy-state";
 
-class LevelButton extends React.Component {
+const LevelButton = ({ level }) => {
 
-    handleClick = () => {
-        gameState.choosenLevel = this.props.level;
-        console.log('choosen level:', gameState.choosenLevel);
+    const handleClick = () => {
+        gameState.choosenLevel = level;
     };
-    render() {
-        const {level} = this.props;
-        return  (
-        <div onClick={this.handleClick} className="nav_button">
-            <span>{level.toUpperCase()}</span>
-        </div>
-        )
-    }
+
+    return  (
+    <div onClick={handleClick} className="nav_button">
+        <span>{level.toUpperCase()}</span>
+    </div>
+    )
 }
 
-class NavPanel extends React.Component {
-    render() {
+const NavPanel = () => {
         return (
         <div className="nav_panel">
                 <LevelButton  level="easy"/>
@@ -27,6 +23,5 @@ class NavPanel extends React.Component {
                 <LevelButton  level="hard"/>
         </div>
        )
-    }
 }
 export default view(NavPanel);

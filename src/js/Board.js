@@ -25,7 +25,6 @@ class Board extends React.Component {
   state = { ...DEFAULT_STATE };
 
   reloadBoardOnTryAgain = () => {
-    console.log("BoardComp RELOAD level:", this.props.level);
     this.setState({
       ...DEFAULT_STATE,
       cards: this.generateCards(gameState.choosenLevel),
@@ -33,21 +32,11 @@ class Board extends React.Component {
   };
 
   componentDidMount() {
-    console.log('%c <Board> ComponentDidMount', "color: red");
-    console.log('Level settings', levelSettings[this.props.level]);
-    
     this.setState(
       { cards: this.generateCards(gameState.choosenLevel),
         // loaded: true,
       });
-  }
-
-  componentDidUpdate() {
-      console.log('<Board> ComponentUpdated');
-      
-    // this.setState({loaded: true});
-  }
-
+    }
   //1st click - asign id of clicked card to temp var in state | change var isFlipped on true
   //2st click - check if id of second card is the same as first one
   //if true - save this id in the array of guessedId's - make further click on them not possible
@@ -227,7 +216,6 @@ class Board extends React.Component {
       );
     });
 
-    console.log('<Board>render, State:', this.state)
     return (
       <div>
         {gameState.gameOver && (

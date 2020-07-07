@@ -13,7 +13,6 @@ class GameOver extends React.Component {
     this.setState({
       show: !this.state.show,
     });
-    console.log('level in game Over State:', currentLevelForRetry);
     
     setTimeout(() => {
       gameState.choosenLevel = currentLevelForRetry;
@@ -27,7 +26,6 @@ class GameOver extends React.Component {
   handleTryAgain = () => {
     this.closeGameOverWindowAndSetGameState(gameState.choosenLevel);
     this.props.retryLevel();
-    console.log("%c RESTART HIT! ", "background: #222; color: #bada55");
   };
 
   handleMenuClick = () => {
@@ -48,7 +46,6 @@ class GameOver extends React.Component {
       e.target.value = '';
     }
   };
-
 
   render() {
     const gameOverField = (

@@ -1,4 +1,8 @@
-const getScoreRecords = () => ( JSON.parse(localStorage.getItem("scoreList")) );
+const getScoreRecords = () => {
+  return JSON.parse(localStorage.getItem("scoreList")) ?  
+         JSON.parse(localStorage.getItem("scoreList"))
+         : [];
+};
 const pushRecordsToDB = listOfRecords => {
   localStorage.setItem("scoreList", JSON.stringify(listOfRecords));
 }
