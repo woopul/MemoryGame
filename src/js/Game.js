@@ -13,7 +13,7 @@ class Game extends React.Component {
 
   showGameOverWindow = () => {
     gameState.gameOver = !gameState.gameOver;
-    console.log("it should be set on true");
+    console.log('<Game>, toogle gameOver, value:', gameState.gameOver);
   };
 
   render() {
@@ -31,7 +31,7 @@ class Game extends React.Component {
       renderElement = (
         <div>
           <div className="return-btn" onClick={this.handleReturn} />
-          <Board level={gameState.choosenLevel} />
+          <Board  level={gameState.choosenLevel} />
         </div>
       );
     }

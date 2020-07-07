@@ -2,34 +2,36 @@ import React from "react";
 import gameState from "./gameState";
 import { view } from "react-easy-state";
 import { Animate } from "react-show";
-import { printScoreRecords, addRecord as postRecord } from "./helpers.js";
+import { logScoreRecords, addRecord as postRecord } from "./helpers/recordStore.js";
 
 class GameOver extends React.Component {
   state = {
     show: true,
   };
-
-  handleTryAgain = () => {
-    gameState.choosenLevel = "";
-    gameState.choosenLevel = this.props.level;
-    gameState.gameOver = false;
-
-    gameState.timeScore = "";
-    gameState.moves = "";
-  };
-
-  handleMenuClick = () => {
+  
+  closeGameOverWindowAndSetGameState = (currentLevelForRetry = '') => {
     this.setState({
       show: !this.state.show,
     });
-
+    console.log('level in game Over State:', currentLevelForRetry);
+    
     setTimeout(() => {
-      gameState.choosenLevel = "";
+      gameState.choosenLevel = currentLevelForRetry;
       gameState.gameOver = false;
 
       gameState.timeScore = "";
       gameState.moves = "";
     }, 1500);
+  }
+
+  handleTryAgain = () => {
+    this.closeGameOverWindowAndSetGameState(gameState.choosenLevel);
+    this.props.retryLevel();
+    console.log("%c RESTART HIT! ", "background: #222; color: #bada55");
+  };
+
+  handleMenuClick = () => {
+    this.closeGameOverWindowAndSetGameState();
   };
 
   handleKeyDown = (e) => {
@@ -42,10 +44,11 @@ class GameOver extends React.Component {
           date: `${currentDate.slice(0,10)}  ${currentDate.slice(11,19)}`
       }
       postRecord(userScore);
-      printScoreRecords();
+      logScoreRecords();
       e.target.value = '';
     }
   };
+
 
   render() {
     const gameOverField = (
@@ -75,18 +78,10 @@ class GameOver extends React.Component {
           show={this.state.show}
           transitionOnMount
           duration={2000}
-          style={{
-            height: "auto",
-          }}
-          start={{
-            opacity: 0,
-          }}
-          enter={{
-            opacity: 1,
-          }}
-          leave={{
-            opacity: 0,
-          }}
+          style={{ height: "auto"}}
+          start={{ opacity: 0, }}
+          enter={{ opacity: 1}}
+          leave={{ opacity: 0}}
         >
           {gameOverField}
         </Animate>

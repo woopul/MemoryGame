@@ -9,6 +9,6 @@ export const addRecord = (newRecord) => {
   pushRecordsToDB(listOfRecords);
 }
 
-export const printScoreRecords = () => {
-  console.log(getScoreRecords());
+export const logScoreRecords = () => {
+  console.table(getScoreRecords());
 }

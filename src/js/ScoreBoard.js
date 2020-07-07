@@ -1,5 +1,6 @@
 import React from "react";
 import gameState from "./gameState";
+import { view } from "react-easy-state";
 
 class ScoreBoard extends React.Component {
   state = {
@@ -73,4 +74,4 @@ class ScoreBoard extends React.Component {
   }
 }
 
-export default ScoreBoard;
+export default view(ScoreBoard);
