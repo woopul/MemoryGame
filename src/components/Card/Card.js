@@ -1,6 +1,7 @@
 import React from "react";
-import reactLogo from "../images/react7.svg"
+import reactLogo from "../../images/react7.svg"
 import { view } from "react-easy-state";
+import './Card.scss';
 
 class Card extends React.Component {
   handleClick = () => {

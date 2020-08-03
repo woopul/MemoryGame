@@ -1,0 +1,29 @@
+.board {
+  width: 450px;
+  height: 550px;
+  padding: 5px;
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  perspective: 1000px;
+}
+
+.board-medium {
+  width: 550px;
+  height: 600px;
+  padding: 5px;
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  perspective: 1000px;
+}
+
+.board-hard {
+  width: 850px;
+  height: 600px;
+  padding: 5px;
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  perspective: 1000px;
+}

@@ -1,0 +1,10 @@
+.score-board {
+  display: flex;
+  justify-content: center;
+  p {
+    display: inline-block;
+    color: white;
+    margin-right: 20px;
+    font-size: 1.5em;
+  }
+}

@@ -1,8 +1,9 @@
 import React from "react";
-import NavPanel from "./NavPanel";
-import Board from "./Board";
+import NavPanel from "../NavPanel/NavPanel";
+import Board from "../Board/Board";
 import { view } from "react-easy-state";
-import gameState from "./gameState";
+import gameState from "../gameState";
+import './Game.scss';
 
 //Render board game with choosen level
 class Game extends React.Component {

@@ -1,5 +1,5 @@
 import React from "react";
-import gameState from "./gameState";
+import gameState from "../gameState";
 import {view} from "react-easy-state";
 
 const LevelButton = ({ level }) => {

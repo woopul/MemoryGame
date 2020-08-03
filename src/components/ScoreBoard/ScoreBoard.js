@@ -1,6 +1,7 @@
 import React from "react";
-import gameState from "./gameState";
+import gameState from "../gameState";
 import { view } from "react-easy-state";
+import './ScoreBoard.scss';
 
 class ScoreBoard extends React.Component {
   state = {

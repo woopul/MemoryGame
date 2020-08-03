@@ -1,0 +1,59 @@
+
+.game_field {
+  width: 60vw;
+  height: 100vh;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  .game_title {
+    color: white;
+    font-family: "Comfortaa", cursive;
+    font-size: 45px;
+    text-align: center;
+    margin-bottom: 20px;
+  }
+
+  .choose_level {
+    color: white;
+    font-family: "Comfortaa", cursive;
+    font-size: 25px;
+    text-align: center;
+    margin-bottom: 20px;
+  }
+
+  .nav_panel {
+    width: auto;
+    height: auto;
+    font-size: 20px;
+    display: flex;
+    justify-content: space-around;
+    margin: 20px auto;
+
+    .nav_button {
+      width: 150px;
+      height: 50px;
+      margin-right: 8px;
+      display: flex;
+      border-radius: 50px;
+      background-color: rgba(159, 180, 157, 0.47);
+      justify-content: center;
+      align-items: center;
+      box-shadow: 3px 4px 13px 4px #343539;
+
+      transition: transform, filter 1s, 0.5s;
+
+      &:hover {
+        cursor: pointer;
+        filter: brightness(120%);
+        transform: scale(1.02);
+      }
+
+      &:active {
+        transform: scale(0.98);
+      }
+    }
+  }
+}

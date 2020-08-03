@@ -1,13 +1,13 @@
 import React from "react";
 import FadeIn from "react-fade-in";
-import Card from "./Card";
-import ScoreBoard from "./ScoreBoard";
-import GameOver from "./GameOver";
+import Card from "../Card/Card";
+import ScoreBoard from "../ScoreBoard/ScoreBoard";
+import GameOver from "../GameOver/GameOver";
 import { view } from "react-easy-state";
-import gameState from "./gameState";
-import { easyImgSrcs, mediumImgSrcs, hardImgSrcs } from "./svgs/easy";
-import {levelSettings} from "./helpers/levelSettings";
-
+import gameState from "../gameState";
+import { easyImgSrcs, mediumImgSrcs, hardImgSrcs } from "../svgs/easy";
+import {levelSettings} from "../helpers/levelSettings";
+import './Board.scss'
 
 const DEFAULT_STATE = {
   isFlipped: false, // stores information if card was clicked
@@ -160,7 +160,7 @@ class Board extends React.Component {
 
     return cardsArr;
   };
-
+ 
   shuffle = (cardList) => {
     for (let i = cardList.length; i; i--) {
       let j = Math.floor(Math.random() * i);
@@ -223,7 +223,6 @@ class Board extends React.Component {
         )}
         {start && (
           <FadeIn transitionDuration={800}>
-            {" "}
             <ScoreBoard moves={moves} />
           </FadeIn>
         )}

@@ -1,12 +1,16 @@
 import React from "react";
-import gameState from "./gameState";
+import gameState from "../gameState";
 import { view } from "react-easy-state";
 import { Animate } from "react-show";
-import { logScoreRecords, addRecord as postRecord } from "./helpers/recordStore.js";
+import { logScoreRecords, addRecord as postRecord } from "../helpers/recordStore.js";
+import './GameOver.scss'
 
 class GameOver extends React.Component {
   state = {
     show: true,
+  
+    showRecords: false,
+    listOfRecords: []
   };
   
   closeGameOverWindowAndSetGameState = (currentLevelForRetry = '') => {
@@ -41,23 +45,42 @@ class GameOver extends React.Component {
           timeScore: gameState.timeScore,
           date: `${currentDate.slice(0,10)}  ${currentDate.slice(11,19)}`
       }
-      postRecord(userScore);
+      const listOfAllRecordsWithNewlyAdded = postRecord(userScore);
       logScoreRecords();
       e.target.value = '';
+      this.setState(prevState => ({ 
+        showRecords: !prevState.showRecords,
+        listOfRecords: listOfAllRecordsWithNewlyAdded
+      }));
     }
   };
+
+  renderRecords = () => {
+    return this.state.listOfRecords.map(record => (<p>
+    Player: {record.playerName} | moves: {record.moves} | time: {record.timeScore} | date: {record.date}
+    </p>))
+  }
+    
 
   render() {
     const gameOverField = (
       <div>
         <div className="game-over-field">
           <div className="game-over-text">Game Over</div>
-          <div className="score">
-            Your Score: {gameState.timeScore} <br /> Moves: {gameState.moves}
-          </div>
-          <div>
-            Your name: <input type="text" onKeyDown={this.handleKeyDown} />
-          </div>
+          {this.state.showRecords ? (
+            <div>{this.renderRecords()}</div>
+          ) : ( 
+            <div>
+              {" "}
+              <div className="score">
+                Your Score: {gameState.timeScore} <br /> Moves:{" "}
+                {gameState.moves}
+              </div>
+              <div>
+                Your name: <input type="text" onKeyDown={this.handleKeyDown} />
+              </div>
+            </div>
+          )}
           <div className="game-over-btns">
             <div
               onClick={this.handleMenuClick}

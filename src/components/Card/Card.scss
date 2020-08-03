@@ -1,0 +1,80 @@
+@import '../../scss-utils/variables';
+
+.card {
+  background: $background-card-color;
+  width: calc(25% - 10px);
+  height: calc(33.333% - 10px);
+  border-radius: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+
+  box-shadow: 1px 4px 20px 0 black;
+
+  transform-style: preserve-3d;
+  transition: transform 0.5s;
+
+  &:hover {
+    transform: scale(1.05);
+    background: lighten($background-card-color, 20%);
+  }
+  &:active {
+    transform: scale(0.95);
+    transition: transform 0.2s;
+  }
+
+  .front_face,
+  .back_face {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    padding: 10px;
+    backface-visibility: hidden;
+  }
+
+  .front_face {
+    transform: rotateY(180deg);
+  }
+
+  .back_face {
+    animation: pulse 0.8s 0s infinite linear alternate;
+  }
+
+  .back_face_container {
+    width: 100%;
+    height: 100%;
+    animation: spin 8s 0s infinite linear;
+  }
+
+  @keyframes pulse {
+    from {
+    }
+    to {
+      transform: scale(1.1);
+    }
+  }
+
+  @keyframes spin {
+    from {
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+}
+
+.card-medium {
+  width: calc(20% - 10px);
+  height: calc(25% - 10px);
+}
+
+.card-hard {
+  width: calc(12.5% - 10px);
+  height: calc(25% - 10px);
+}
+
+.card.flip {
+  transform: rotateY(180deg);
+  transition: transform 0.3s;
+}

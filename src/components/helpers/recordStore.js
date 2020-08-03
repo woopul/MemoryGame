@@ -11,6 +11,7 @@ export const addRecord = (newRecord) => {
   let listOfRecords = getScoreRecords();
   listOfRecords.push(newRecord);
   pushRecordsToDB(listOfRecords);
+  return listOfRecords;
 }
 
 export const logScoreRecords = () => {
